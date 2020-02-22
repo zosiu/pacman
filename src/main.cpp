@@ -1,11 +1,11 @@
 #include "pch.hpp"
-#include "spdlog/sinks/stdout_color_sinks.h"
-#include "spdlog/spdlog.h"
 
 const unsigned int SCR_HEIGHT = 600;
 const unsigned int SCR_WIDTH = 800;
 
 int main() {
+  engine::Logger::init("pacman.log");
+
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
@@ -17,7 +17,7 @@ int main() {
 
   GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
   if (window == nullptr) {
-    spdlog::critical("Failed to create GLFW window");
+    LOG_CRITICAL("Failed to create GLFW window");
     glfwTerminate();
     return -1;
   }
@@ -32,12 +32,12 @@ int main() {
   });
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    spdlog::critical("Failed to initialize GLAD");
+    LOG_CRITICAL("Failed to initialize GLAD");
     return -1;
   }
 
-  spdlog::info("OpenGL version: {}", glGetString(GL_VERSION));
-  spdlog::info("OpenGL vendor: {}", glGetString(GL_VENDOR));
+  LOG_INFO("OpenGL version: {}", glGetString(GL_VERSION));
+  LOG_INFO("OpenGL vendor: {}", glGetString(GL_VENDOR));
 
   while (!glfwWindowShouldClose(window)) {
     glClearColor(1.0, 1.0, 0.0, 1.0);

@@ -1,33 +1,22 @@
 #include "engine/core/Core.hpp"
+#include "engine/core/Window.hpp"
 #include "pch.hpp"
+#include <GLFW/glfw3.h>
 
 const unsigned int SCR_HEIGHT = 600;
 const unsigned int SCR_WIDTH = 800;
 
 int main() {
   engine::Logger::init("pacman.log");
+  auto window = std::make_unique<engine::Window>(engine::WindowProps("pacman", SCR_WIDTH, SCR_HEIGHT));
 
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  GLFWwindow *native_window = window->get_native_window();
 
-#ifdef __APPLE__
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
-#endif
-
-  GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
-  if (window == nullptr) {
-    REFUTE(true, "Failed to create GLFW window");
-    glfwTerminate();
-    return -1;
-  }
-
-  glfwMakeContextCurrent(window);
-  glfwSetFramebufferSizeCallback(window,
+  glfwMakeContextCurrent(native_window);
+  glfwSetFramebufferSizeCallback(native_window,
                                  [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
 
-  glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+  glfwSetKeyCallback(native_window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
       glfwSetWindowShouldClose(window, true);
   });
@@ -40,14 +29,13 @@ int main() {
   LOG_INFO("OpenGL version: {}", glGetString(GL_VERSION));
   LOG_INFO("OpenGL vendor: {}", glGetString(GL_VENDOR));
 
-  while (!glfwWindowShouldClose(window)) {
+  while (!glfwWindowShouldClose(native_window)) {
     glClearColor(1.0, 1.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glfwSwapBuffers(window);
+    glfwSwapBuffers(native_window);
     glfwPollEvents();
   }
 
-  glfwTerminate();
   return 0;
 }

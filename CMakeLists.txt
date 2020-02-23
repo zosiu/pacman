@@ -41,6 +41,7 @@ add_subdirectory(${SPDLOG_DIR})
 
 set (APP_NAME "pacman")
 add_executable (${APP_NAME} ${SRC_FILES})
+target_compile_definitions (${APP_NAME} PUBLIC "$<$<CONFIG:DEBUG>:DEBUG>")
 target_precompile_headers (${APP_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/pch.hpp")
 
 target_compile_definitions(${APP_NAME} PRIVATE "GLFW_INCLUDE_NONE")

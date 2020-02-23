@@ -1,3 +1,4 @@
+#include "engine/core/Core.hpp"
 #include "pch.hpp"
 
 const unsigned int SCR_HEIGHT = 600;
@@ -17,7 +18,7 @@ int main() {
 
   GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
   if (window == nullptr) {
-    LOG_CRITICAL("Failed to create GLFW window");
+    REFUTE(true, "Failed to create GLFW window");
     glfwTerminate();
     return -1;
   }
@@ -32,7 +33,7 @@ int main() {
   });
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-    LOG_CRITICAL("Failed to initialize GLAD");
+    ASSERT(false, "Failed to initialize GLAD");
     return -1;
   }
 

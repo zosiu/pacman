@@ -3,6 +3,7 @@
 #ifndef C4C12B61_3134_3B08_1762_7729EE37435C
 #define C4C12B61_3134_3B08_1762_7729EE37435C
 
+#include "../events/Event.hpp"
 #include "Core.hpp"
 #include <GLFW/glfw3.h>
 
@@ -19,6 +20,8 @@ struct WindowProps {
 
 class Window {
 public:
+  using EventCallbackFun = std::function<void(const Event &)>;
+
   Window(const WindowProps &props);
   ~Window();
   Window(const Window &) = delete;
@@ -29,14 +32,26 @@ public:
   unsigned int get_width() const;
   unsigned int get_height() const;
   GLFWwindow *get_native_window() const;
+  void set_event_callback(const EventCallbackFun &callback);
 
 private:
   void create(const WindowProps &props);
   void destroy();
 
+  void set_window_closed_callback();
+
 private:
   GLFWwindow *native_window;
-  WindowProps props;
+
+  struct WindowData {
+    std::string title;
+    unsigned int width;
+    unsigned int height;
+
+    EventCallbackFun handle_event;
+  };
+
+  WindowData props;
 };
 } // namespace engine
 

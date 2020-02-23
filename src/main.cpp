@@ -11,6 +11,7 @@ int main() {
   auto window = std::make_unique<engine::Window>(engine::WindowProps("pacman", SCR_WIDTH, SCR_HEIGHT));
 
   GLFWwindow *native_window = window->get_native_window();
+  window->set_event_callback([](const engine::Event &event) { LOG_INFO(event); });
 
   glfwMakeContextCurrent(native_window);
   glfwSetFramebufferSizeCallback(native_window,

@@ -6,6 +6,7 @@
 #include <array>
 #include <string>
 
+#include <functional>
 #include <memory>
 
 #include "glad/glad.h"

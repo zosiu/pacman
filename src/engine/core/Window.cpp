@@ -43,10 +43,19 @@ void Window::create(const WindowProps &window_props) {
   REFUTE(native_window == nullptr, "Failed to create GLFW window");
   ++window_count;
 
+  openGL_context = std::make_unique<OpenGLContext>(native_window);
+  openGL_context->init();
+
   glfwSetWindowUserPointer(native_window, &props);
 
   register_window_closed_callback();
   register_key_callback();
+}
+
+void Window::on_update() {
+  glfwPollEvents();
+
+  openGL_context->swap_buffers();
 }
 
 void Window::register_window_closed_callback() {

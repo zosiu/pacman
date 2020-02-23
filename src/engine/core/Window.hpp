@@ -3,6 +3,7 @@
 #ifndef C4C12B61_3134_3B08_1762_7729EE37435C
 #define C4C12B61_3134_3B08_1762_7729EE37435C
 
+#include "../OpenGL/OpenGLContext.hpp"
 #include "../events/Event.hpp"
 #include "Core.hpp"
 
@@ -30,6 +31,8 @@ public:
   Window &operator=(const Window &) = delete;
   Window &operator=(Window &&) = delete;
 
+  void on_update();
+
   unsigned int get_width() const;
   unsigned int get_height() const;
   GLFWwindow *get_native_window() const;
@@ -44,6 +47,7 @@ private:
 
 private:
   GLFWwindow *native_window;
+  std::unique_ptr<OpenGLContext> openGL_context;
 
   struct WindowData {
     std::string title;

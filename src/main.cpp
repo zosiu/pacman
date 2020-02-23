@@ -1,4 +1,3 @@
-#include "engine/OpenGL/OpenGLContext.hpp"
 #include "engine/core/Core.hpp"
 #include "engine/core/Window.hpp"
 #include "engine/events/Event.hpp"
@@ -27,9 +26,6 @@ int main() {
                                                      });
   });
 
-  auto openGL_context = engine::OpenGLContext(native_window);
-  openGL_context.init();
-
   glfwSetFramebufferSizeCallback(native_window,
                                  [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
 
@@ -37,7 +33,7 @@ int main() {
     glClearColor(1.0, 1.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    openGL_context.swap_buffers();
+    window->on_update();
     glfwPollEvents();
   }
 

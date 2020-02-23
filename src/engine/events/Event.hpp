@@ -5,10 +5,16 @@
 
 namespace engine {
 
-enum class EventType { None = 0, WindowClosed };
+enum class EventType { None = 0, WindowClosed, KeyPressed };
 
 class Event {
 public:
+  template <typename T, typename F> static void dispatch(const Event &event, const F &handler) {
+    if (event.get_event_type() == T::get_static_type()) {
+      handler(static_cast<const T &>(event));
+    }
+  }
+
   virtual std::string get_name() const = 0;
   virtual EventType get_event_type() const = 0;
 

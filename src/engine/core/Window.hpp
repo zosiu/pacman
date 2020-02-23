@@ -38,7 +38,8 @@ private:
   void create(const WindowProps &props);
   void destroy();
 
-  void set_window_closed_callback();
+  void register_window_closed_callback();
+  void register_key_callback();
 
 private:
   GLFWwindow *native_window;

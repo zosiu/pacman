@@ -1,0 +1,8 @@
+#pragma once
+
+#ifndef B91AC087_5134_3B08_F73D_47F51306D2D1
+#define B91AC087_5134_3B08_F73D_47F51306D2D1
+
+#include "key/KeyPressedEvent.hpp"
+
+#endif /* B91AC087_5134_3B08_F73D_47F51306D2D1 */

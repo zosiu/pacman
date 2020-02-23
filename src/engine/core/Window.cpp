@@ -1,5 +1,6 @@
 #include "Window.hpp"
 #include "../events/ApplicationEvents.hpp"
+#include "../events/KeyEvents.hpp"
 
 namespace engine {
 static uint8_t window_count = 0;
@@ -43,14 +44,33 @@ void Window::create(const WindowProps &window_props) {
 
   glfwSetWindowUserPointer(native_window, &props);
 
-  set_window_closed_callback();
+  register_window_closed_callback();
+  register_key_callback();
 }
 
-void Window::set_window_closed_callback() {
+void Window::register_window_closed_callback() {
   glfwSetWindowCloseCallback(native_window, [](GLFWwindow *window) {
     auto handler = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
     WindowClosedEvent window_closed;
     handler->handle_event(window_closed);
+  });
+}
+
+void Window::register_key_callback() {
+  glfwSetKeyCallback(native_window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+    auto handler = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
+    switch (action) {
+    case GLFW_PRESS: {
+      KeyPressedEvent key_pressed_once(static_cast<KeyCode>(key), false);
+      handler->handle_event(key_pressed_once);
+      break;
+    }
+    case GLFW_REPEAT: {
+      KeyPressedEvent key_pressed_repeatedly(static_cast<KeyCode>(key), true);
+      handler->handle_event(key_pressed_repeatedly);
+      break;
+    }
+    }
   });
 }
 

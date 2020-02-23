@@ -6,6 +6,8 @@
 #include <array>
 #include <string>
 
+#include <sstream>
+
 #include <functional>
 #include <memory>
 

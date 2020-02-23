@@ -1,5 +1,7 @@
 #include "engine/core/Core.hpp"
 #include "engine/core/Window.hpp"
+#include "engine/events/Event.hpp"
+#include "engine/events/KeyEvents.hpp"
 #include "pch.hpp"
 #include <GLFW/glfw3.h>
 
@@ -11,16 +13,21 @@ int main() {
   auto window = std::make_unique<engine::Window>(engine::WindowProps("pacman", SCR_WIDTH, SCR_HEIGHT));
 
   GLFWwindow *native_window = window->get_native_window();
-  window->set_event_callback([](const engine::Event &event) { LOG_INFO(event); });
+
+  window->set_event_callback([native_window](const engine::Event &event) {
+    LOG_INFO(event);
+
+    engine::Event::dispatch<engine::KeyPressedEvent>(event,
+                                                     [native_window](const engine::KeyPressedEvent &key_press_event) {
+                                                       if (key_press_event.get_key_code() == engine::KeyCode::Escape) {
+                                                         glfwSetWindowShouldClose(native_window, true);
+                                                       }
+                                                     });
+  });
 
   glfwMakeContextCurrent(native_window);
   glfwSetFramebufferSizeCallback(native_window,
                                  [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
-
-  glfwSetKeyCallback(native_window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      glfwSetWindowShouldClose(window, true);
-  });
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     ASSERT(false, "Failed to initialize GLAD");

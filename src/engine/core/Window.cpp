@@ -1,6 +1,7 @@
 #include "Window.hpp"
 #include "../events/ApplicationEvents.hpp"
 #include "../events/KeyEvents.hpp"
+#include <GLFW/glfw3.h>
 
 namespace engine {
 static uint8_t window_count = 0;

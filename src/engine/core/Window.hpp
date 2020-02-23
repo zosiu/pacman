@@ -5,7 +5,8 @@
 
 #include "../events/Event.hpp"
 #include "Core.hpp"
-#include <GLFW/glfw3.h>
+
+struct GLFWwindow;
 
 namespace engine {
 

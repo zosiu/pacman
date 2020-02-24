@@ -48,6 +48,7 @@ void Window::create(const WindowProps &window_props) {
 
   glfwSetWindowUserPointer(native_window, &props);
 
+  register_window_resized_callback();
   register_window_closed_callback();
   register_key_callback();
 }
@@ -56,6 +57,17 @@ void Window::on_update() {
   glfwPollEvents();
 
   openGL_context->swap_buffers();
+}
+
+void Window::register_window_resized_callback() {
+  glfwSetFramebufferSizeCallback(native_window, [](GLFWwindow *window, int width, int height) {
+    auto handler = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
+    handler->width = width;
+    handler->height = height;
+
+    WindowResizedEvent window_resized(width, height);
+    handler->handle_event(window_resized);
+  });
 }
 
 void Window::register_window_closed_callback() {

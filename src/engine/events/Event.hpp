@@ -5,7 +5,7 @@
 
 namespace engine {
 
-enum class EventType { None = 0, WindowClosed, KeyPressed };
+enum class EventType { None = 0, WindowClosed, WindowResized, KeyPressed };
 
 class Event {
 public:

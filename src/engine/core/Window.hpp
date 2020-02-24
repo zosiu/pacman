@@ -43,6 +43,7 @@ private:
   void destroy();
 
   void register_window_closed_callback();
+  void register_window_resized_callback();
   void register_key_callback();
 
 private:

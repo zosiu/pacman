@@ -14,27 +14,26 @@ int main() {
   auto window = std::make_unique<engine::Window>(engine::WindowProps("pacman", SCR_WIDTH, SCR_HEIGHT));
 
   GLFWwindow *native_window = window->get_native_window();
+  bool running = true;
 
-  window->set_event_callback([native_window](const engine::Event &event) {
+  window->set_event_callback([&running](const engine::Event &event) {
     LOG_INFO(event);
 
-    engine::Event::dispatch<engine::KeyPressedEvent>(event,
-                                                     [native_window](const engine::KeyPressedEvent &key_press_event) {
-                                                       if (key_press_event.get_key_code() == engine::KeyCode::Escape) {
-                                                         glfwSetWindowShouldClose(native_window, true);
-                                                       }
-                                                     });
+    engine::Event::dispatch<engine::KeyPressedEvent>(event, [&running](const engine::KeyPressedEvent &key_press_event) {
+      if (key_press_event.get_key_code() == engine::KeyCode::Escape) {
+        running = false;
+      }
+    });
   });
 
-  glfwSetFramebufferSizeCallback(native_window,
-                                 [](GLFWwindow *window, int width, int height) { glViewport(0, 0, width, height); });
+  glfwSetFramebufferSizeCallback(
+      native_window, [](GLFWwindow * /*window */, int width, int height) { glViewport(0, 0, width, height); });
 
-  while (!glfwWindowShouldClose(native_window)) {
+  while (running) {
     glClearColor(1.0, 1.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     window->on_update();
-    glfwPollEvents();
   }
 
   return 0;

@@ -4,12 +4,12 @@ namespace engine {
 
 EventType WindowResizedEvent::get_static_type() { return EventType::WindowResized; }
 
-WindowResizedEvent::WindowResizedEvent(uint32_t width, uint32_t height) : width(width), height(height) {}
+WindowResizedEvent::WindowResizedEvent(uint16_t width, uint16_t height) : width(width), height(height) {}
 
 EventType WindowResizedEvent::get_event_type() const { return get_static_type(); }
 
-uint32_t WindowResizedEvent::get_width() const { return width; }
-uint32_t WindowResizedEvent::get_height() const { return height; }
+uint16_t WindowResizedEvent::get_width() const { return width; }
+uint16_t WindowResizedEvent::get_height() const { return height; }
 
 std::string WindowResizedEvent::get_name() const {
   std::stringstream ss;

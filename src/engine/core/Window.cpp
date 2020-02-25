@@ -35,11 +35,11 @@ void Window::create(const WindowProps &window_props) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
 #endif
   }
 
-  native_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+  native_window = glfwCreateWindow((int)props.width, (int)props.height, props.title.c_str(), nullptr, nullptr);
   REFUTE(native_window == nullptr, "Failed to create GLFW window");
   ++window_count;
 
@@ -55,17 +55,16 @@ void Window::create(const WindowProps &window_props) {
 
 void Window::on_update() {
   glfwPollEvents();
-
   openGL_context->swap_buffers();
 }
 
 void Window::register_window_resized_callback() {
   glfwSetFramebufferSizeCallback(native_window, [](GLFWwindow *window, int width, int height) {
     auto handler = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
-    handler->width = width;
-    handler->height = height;
+    handler->width = (uint16_t)width;
+    handler->height = (uint16_t)height;
 
-    WindowResizedEvent window_resized(width, height);
+    WindowResizedEvent window_resized((uint16_t)width, (uint16_t)height);
     handler->handle_event(window_resized);
   });
 }
@@ -79,7 +78,7 @@ void Window::register_window_closed_callback() {
 }
 
 void Window::register_key_callback() {
-  glfwSetKeyCallback(native_window, [](GLFWwindow *window, int key, int scancode, int action, int mods) {
+  glfwSetKeyCallback(native_window, [](GLFWwindow *window, int key, int /* scancode */, int action, int /* mods */) {
     auto handler = static_cast<WindowData *>(glfwGetWindowUserPointer(window));
     switch (action) {
     case GLFW_PRESS: {

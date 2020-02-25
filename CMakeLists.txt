@@ -2,16 +2,13 @@ cmake_minimum_required (VERSION 3.16)
 
 project (Pacman)
 
-set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pedantic")
 set (CMAKE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src/")
 file (GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/*.cpp")
 set (CMAKE_BINARY_DIR "${PROJECT_SOURCE_DIR}/bin/")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/debug")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/release")
-set (LIB_DIR "${PROJECT_SOURCE_DIR}/lib/")
+set (LIB_DIR "${PROJECT_SOURCE_DIR}/vendor/")
 set (SHADER_DIR "${PROJECT_SOURCE_DIR}/shaders/")
 
 
@@ -39,8 +36,14 @@ set(SPDLOG_BUILD_BENCH OFF CACHE INTERNAL "Build spdlog benchmarks")
 set(SPDLOG_NO_EXCEPTIONS ON CACHE INTERNAL "Build spdlog no exc")
 add_subdirectory(${SPDLOG_DIR})
 
+set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set (APP_NAME "pacman")
 add_executable (${APP_NAME} ${SRC_FILES})
+
+target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
+target_compile_options(${APP_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
 target_compile_definitions (${APP_NAME} PUBLIC "$<$<CONFIG:DEBUG>:DEBUG>")
 target_precompile_headers (${APP_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/pch.hpp")
 

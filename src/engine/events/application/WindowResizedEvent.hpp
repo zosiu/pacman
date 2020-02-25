@@ -11,17 +11,17 @@ class WindowResizedEvent : public Event {
 public:
   static EventType get_static_type();
 
-  WindowResizedEvent(uint32_t width, uint32_t height);
+  WindowResizedEvent(uint16_t width, uint16_t height);
 
   std::string get_name() const override;
   EventType get_event_type() const override;
 
-  uint32_t get_width() const;
-  uint32_t get_height() const;
+  uint16_t get_width() const;
+  uint16_t get_height() const;
 
 private:
-  uint32_t width;
-  uint32_t height;
+  uint16_t width;
+  uint16_t height;
 };
 
 } // namespace engine

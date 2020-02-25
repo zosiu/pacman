@@ -13,10 +13,10 @@ namespace engine {
 
 struct WindowProps {
   std::string title;
-  unsigned int width;
-  unsigned int height;
+  uint16_t width;
+  uint16_t height;
 
-  WindowProps(const std::string &title = "a window", unsigned int width = 800, unsigned int height = 600)
+  WindowProps(const std::string &title = "a window", uint16_t width = 800, uint16_t height = 600)
       : title(title), width(width), height(height) {}
 };
 

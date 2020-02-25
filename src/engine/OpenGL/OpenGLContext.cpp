@@ -54,8 +54,14 @@ void OpenGLContext::init() {
     glDebugMessageCallback(
         [](GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei /* length */, const GLchar *message,
            const void * /* user_param */) {
-          LOG_WARN("[OpenGL][{}] <{}> {}: {} ({})", OPENGL_DEBUG_SOURCES.at(source),
-                   OPENGL_DEBUG_SEVERITIES.at(severity), OPENGL_DEBUG_TYPES.at(type), message, id);
+          std::string msg_source = OPENGL_DEBUG_SOURCES.at(source);
+          std::string msg_severity = OPENGL_DEBUG_SEVERITIES.at(severity);
+          std::string msg_type = OPENGL_DEBUG_TYPES.at(type);
+          if (severity == GL_DEBUG_SEVERITY_NOTIFICATION) {
+            LOG_INFO("[OpenGL][{}] <{}> {}: {} ({})", msg_source, msg_severity, msg_type, message, id);
+          } else {
+            LOG_WARN("[OpenGL][{}] <{}> {}: {} ({})", msg_source, msg_severity, msg_type, message, id);
+          }
         },
         nullptr);
 

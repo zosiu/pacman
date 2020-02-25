@@ -1,6 +1,7 @@
 #include "OpenGLShaderProgram.hpp"
 #include "../core/Core.hpp"
 #include "../utils/File.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace engine {
 
@@ -48,6 +49,12 @@ OpenGLShaderProgram::~OpenGLShaderProgram() { glDeleteProgram(id); }
 void OpenGLShaderProgram::bind() const { glUseProgram(id); }
 
 void OpenGLShaderProgram::unbind() const { glUseProgram(0); }
+
+void OpenGLShaderProgram::upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix) {
+  GLint uniform_location = glGetUniformLocation(id, name.c_str());
+  REFUTE(uniform_location == -1, "could not find uniform {}", name);
+  glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
 
 GLuint OpenGLShaderProgram::compile_shader(GLenum shader_type, const char *source_file) {
   GLuint shader = glCreateShader(shader_type);

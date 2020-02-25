@@ -10,6 +10,7 @@ inline constexpr int MINIMUM_OPENGL_MINOR_VERSION = 0;
 
 #ifdef DEBUG
 #define ENABLE_ASSERTS
+#define OPENGL_DEBUG
 #endif
 
 #ifdef ENABLE_ASSERTS

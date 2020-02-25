@@ -19,6 +19,10 @@ set (SHADER_DIR "${PROJECT_SOURCE_DIR}/shaders/")
 set(GLAD_DIR "${LIB_DIR}/glad")
 add_subdirectory(${GLAD_DIR})
 
+# glad
+set(GLM_DIR "${LIB_DIR}/glm")
+add_subdirectory(${GLM_DIR})
+
 # GLFW
 set(GLFW_DIR "${LIB_DIR}/glfw")
 set(GLFW_BUILD_EXAMPLES OFF CACHE INTERNAL "Build the GLFW example programs")
@@ -43,17 +47,19 @@ set (APP_NAME "pacman")
 add_executable (${APP_NAME} ${SRC_FILES})
 
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
-target_compile_options(${APP_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion)
+target_compile_options(${APP_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic)
 target_compile_definitions (${APP_NAME} PUBLIC "$<$<CONFIG:DEBUG>:DEBUG>")
 target_precompile_headers (${APP_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/pch.hpp")
 
 target_compile_definitions(${APP_NAME} PRIVATE "GLFW_INCLUDE_NONE")
 target_include_directories(${APP_NAME} PRIVATE "${GLFW_DIR}/include")
+target_include_directories(${APP_NAME} PRIVATE "${GLM_DIR}/include")
 target_include_directories(${APP_NAME} PRIVATE "${GLAD_DIR}/include")
 target_include_directories(${APP_NAME} PRIVATE "${SPDLOG_DIR}/include")
 
 target_link_libraries(${APP_NAME} "glfw" "${GLFW_LIBRARIES}")
 target_link_libraries(${APP_NAME} "glad" ${CMAKE_DL_LIBS})
+target_link_libraries(${APP_NAME} "glm")
 target_link_libraries(${APP_NAME} "spdlog")
 
 

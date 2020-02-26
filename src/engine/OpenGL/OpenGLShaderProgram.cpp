@@ -50,6 +50,17 @@ void OpenGLShaderProgram::bind() const { glUseProgram(id); }
 
 void OpenGLShaderProgram::unbind() const { glUseProgram(0); }
 
+void OpenGLShaderProgram::upload_view_projection_uniform(const glm::mat4 &matrix) {
+  GLint current_program;
+  glGetIntegerv(GL_CURRENT_PROGRAM, &current_program);
+  REFUTE(current_program == 0, "could not find active shader program");
+
+  GLint uniform_location = glGetUniformLocation(current_program, "u_view_projection");
+  REFUTE(uniform_location == -1, "could not find uniform u_view_projection");
+
+  glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
 void OpenGLShaderProgram::upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix) {
   GLint uniform_location = glGetUniformLocation(id, name.c_str());
   REFUTE(uniform_location == -1, "could not find uniform {}", name);

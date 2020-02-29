@@ -14,6 +14,7 @@ namespace engine {
 class Application {
 public:
   Application(uint16_t width = 1024, uint16_t height = 768);
+  ~Application();
 
   void run();
   void on_event(const Event &event);

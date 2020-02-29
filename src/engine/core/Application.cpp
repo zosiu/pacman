@@ -3,6 +3,7 @@
 #include "../OpenGL/renderer/BatchRenderer2D.hpp"
 #include "../events/KeyEvents.hpp"
 #include <glad/glad.h>
+#include <glm/gtx/string_cast.hpp>
 
 namespace engine {
 
@@ -20,12 +21,12 @@ void Application::run() {
   engine::OpenGLShaderProgram program("shaders/base.vert.glsl", "shaders/base.frag.glsl");
   program.bind();
 
-  constexpr int num_of_quads = 20;
-  constexpr float quad_size = 1.8f / (float)num_of_quads;
-  constexpr float small_pill_size = quad_size / 5.0f;
-  constexpr float big_pill_size = small_pill_size * 9 / 5.0f;
+  constexpr int num_of_quads = 21;
+  constexpr float t = 2.0f / num_of_quads;
+  const auto model_transform =
+      glm::mat4({{t, 0.0f, 0.0f, 0.0f}, {0.0f, -t, 0.0f, 0.0f}, {0.0f, 0.0f, t, 0.0f}, {-1.0, 1.0, -1.0, 1.0}});
 
-  constexpr char level_layout[21][21] = {
+  constexpr char level_layout[num_of_quads][num_of_quads] = {
       {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'},
       {'.', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '.'},
       {'.', '#', 'O', 'o', 'o', 'o', 'o', 'o', 'o', 'o', '#', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'O', '#', '.'},
@@ -48,47 +49,56 @@ void Application::run() {
       {'.', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '.'},
       {'.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.'}};
 
+  const glm::vec2 size = {1.0, 1.0};
+  const glm::vec2 small_pill_size = {0.2, 0.2};
+  const glm::vec2 big_pill_size = {0.4, 0.4};
+  const glm::vec2 psize = {1.0, 1.0};
+
   while (running) {
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     BatchRenderer2D::begin_batch();
 
-    for (auto [y, dy] = std::tuple{-0.9f, num_of_quads}; y < 0.9f; y += quad_size, --dy) {
-      for (auto [x, dx] = std::tuple{-0.95f, 0}; x < 0.85f; x += quad_size, ++dx) {
+    for (int dy = 0; dy < num_of_quads; ++dy) {
+      for (int dx = 0; dx < num_of_quads; ++dx) {
+        // glm::vec3 transformed = transform * glm::vec3{dx, dy, 1.0f};
+        glm::vec2 pos = {dx, dy};
+
         switch (level_layout[dy][dx]) {
         case '#': {
-          BatchRenderer2D::draw_quad({x, y}, {quad_size, quad_size}, {0.0f, 0.0f, 0.5f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, size, {0.0f, 0.0f, 0.5f, 1.0f});
           break;
         }
         case '.': {
-          BatchRenderer2D::draw_quad({x, y}, {quad_size, quad_size}, {0.0f, 0.0f, 0.0f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, size, {0.0f, 0.0f, 0.0f, 1.0f});
           break;
         }
         case 'o': {
-          BatchRenderer2D::draw_quad({x, y}, {quad_size, quad_size}, {0.0f, 0.0f, 0.0f, 1.0f});
-          BatchRenderer2D::draw_quad(
-              {x + (quad_size - small_pill_size) / 2.0f, y + (quad_size - small_pill_size) / 2.0f},
-              {small_pill_size, small_pill_size}, {1.0f, 1.0f, 1.0f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, size, {0.0f, 0.0f, 0.0f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, small_pill_size, {1.0f, 1.0f, 1.0f, 1.0f});
           break;
         }
         case 'O': {
-          BatchRenderer2D::draw_quad({x, y}, {quad_size, quad_size}, {0.0f, 0.0f, 0.0f, 1.0f});
-          BatchRenderer2D::draw_quad({x + (quad_size - big_pill_size) / 2.0f, y + (quad_size - big_pill_size) / 2.0f},
-                                     {big_pill_size, big_pill_size}, {1.0f, 1.0f, 1.0f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, size, {0.0f, 0.0f, 0.0f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, big_pill_size, {1.0f, 1.0f, 1.0f, 1.0f});
           break;
         }
         case 'J': {
-          BatchRenderer2D::draw_quad({x, y}, {quad_size, quad_size}, {0.0f, 0.0f, 0.3f, 1.0f});
+          BatchRenderer2D::draw_quad(pos, size, {0.0f, 0.0f, 0.3f, 1.0f});
           break;
         }
         }
       }
     }
 
+    BatchRenderer2D::draw_quad({10, 12}, psize, {1.0f, 1.0f, 0.0f, 1.0f});
+
     BatchRenderer2D::end_batch();
 
     OpenGLShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
+    OpenGLShaderProgram::upload_model_transformation_uniform(model_transform);
+
     BatchRenderer2D::flush();
 
     window->on_update();

@@ -91,19 +91,19 @@ void BatchRenderer2D::draw_quad(const glm::vec2 &position, const glm::vec2 &size
     begin_batch();
   }
 
-  data.quads_iter->position = {position.x, position.y, 0.0f};
+  data.quads_iter->position = {position.x - size.x / 2.0, position.y + size.y / 2.0, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x + size.x, position.y, 0.0f};
+  data.quads_iter->position = {position.x + size.x / 2.0, position.y + size.y / 2.0, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x + size.x, position.y + size.y, 0.0f};
+  data.quads_iter->position = {position.x + size.x / 2.0, position.y - size.y / 2.0, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x, position.y + size.y, 0.0f};
+  data.quads_iter->position = {position.x - size.x / 2.0, position.y - size.y / 2.0, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 

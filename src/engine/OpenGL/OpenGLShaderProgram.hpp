@@ -16,6 +16,7 @@ public:
   void unbind() const;
 
   static void upload_view_projection_uniform(const glm::mat4 &matrix);
+  static void upload_model_transformation_uniform(const glm::mat4 &matrix);
   void upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix);
 
 private:

@@ -50,8 +50,8 @@ void BatchRenderer2D::init() {
     indices[i + 2] = 2 + offset;
 
     indices[i + 3] = 2 + offset;
-    indices[i + 4] = 0 + offset;
-    indices[i + 5] = 3 + offset;
+    indices[i + 4] = 3 + offset;
+    indices[i + 5] = 1 + offset;
 
     offset += 4;
   }
@@ -91,19 +91,19 @@ void BatchRenderer2D::draw_quad(const glm::vec2 &position, const glm::vec2 &size
     begin_batch();
   }
 
-  data.quads_iter->position = {position.x - size.x / 2.0, position.y + size.y / 2.0, 0.0f};
+  data.quads_iter->position = {position.x, position.y, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x + size.x / 2.0, position.y + size.y / 2.0, 0.0f};
+  data.quads_iter->position = {position.x + size.x, position.y, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x + size.x / 2.0, position.y - size.y / 2.0, 0.0f};
+  data.quads_iter->position = {position.x, position.y + size.y, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 
-  data.quads_iter->position = {position.x - size.x / 2.0, position.y - size.y / 2.0, 0.0f};
+  data.quads_iter->position = {position.x + size.x, position.y + size.y, 0.0f};
   data.quads_iter->color = color;
   ++data.quads_iter;
 

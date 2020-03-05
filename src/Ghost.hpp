@@ -16,6 +16,11 @@ public:
   void render();
 
 private:
+  void render_body();
+  void render_pupils();
+  void render_eye_whites();
+
+private:
   glm::vec4 color;
   Movement movement;
 };

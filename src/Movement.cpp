@@ -8,6 +8,8 @@ Movement::Movement(glm::vec2 starting_position, Direction starting_direction, fl
 
 const glm::vec2 &Movement::get_position() const { return position; }
 
+glm::vec<2, int> Movement::get_tile() const { return {(int)floorf(position.x), (int)floorf(position.y)}; }
+
 Direction Movement::get_direction() const { return direction; }
 
 Direction Movement::get_requested_direction() const { return requested_direction; }

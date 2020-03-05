@@ -7,7 +7,7 @@
 
 namespace pacman {
 
-enum class Tile { Void, Wall, Floor, Pen };
+enum class Tile { Void, Wall, Floor };
 
 class Level {
 public:
@@ -72,12 +72,12 @@ private:
        },
        {
            Tile::Void, Tile::Void, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
-           Tile::Wall, Tile::Wall, Tile::Wall, Tile::Pen,   Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
+           Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
            Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Void, Tile::Void,
        },
        {
            Tile::Void, Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall, Tile::Floor,
-           Tile::Wall, Tile::Wall,  Tile::Pen,   Tile::Pen,   Tile::Pen,   Tile::Wall,  Tile::Wall, Tile::Floor,
+           Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Floor,
            Tile::Wall, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
        },
        {

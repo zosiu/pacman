@@ -79,11 +79,17 @@ void Application::run() {
 
     window->on_update();
 
-    for (size_t i = 0; i < delta_ms; ++i) {
-      player->update();
+    game_over = (std::any_of(ghosts.begin(), ghosts.end(), [this](const pacman::Ghost &ghost) {
+      return glm::distance(ghost.get_position(), this->player->get_position()) < 0.9f;
+    }));
 
-      for (auto &ghost : ghosts)
-        ghost.update();
+    if (!game_over) {
+      for (size_t i = 0; i < delta_ms; ++i) {
+        player->update();
+
+        for (auto &ghost : ghosts)
+          ghost.update();
+      }
     }
   }
 }

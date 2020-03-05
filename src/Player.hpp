@@ -12,6 +12,7 @@ public:
   Player(glm::vec2 starting_position, Direction starting_direction, float speed, const Level *level);
 
   void request_direction(Direction direction);
+  const glm::vec2 &get_position() const;
 
   void update();
   void render();

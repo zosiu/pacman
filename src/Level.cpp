@@ -27,9 +27,6 @@ void Level::render() {
       case Tile::Floor:
         engine::BatchRenderer2D::draw_quad(pos, tile_size, {0.0f, 0.0f, 0.0f, 1.0f});
         break;
-      case Tile::Pen:
-        engine::BatchRenderer2D::draw_quad(pos, tile_size, {0.0f, 0.0f, 0.6f, 1.0f});
-        break;
       case Tile::Void:
         break;
       }

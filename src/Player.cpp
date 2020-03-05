@@ -83,4 +83,6 @@ void Player::render_mouth() {
 
 void Player::request_direction(Direction direction) { movement.request_direction(direction); }
 
+const glm::vec2 &Player::get_position() const { return movement.get_position(); }
+
 } // namespace pacman

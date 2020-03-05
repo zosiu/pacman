@@ -31,8 +31,9 @@ private:
   bool running = true;
   std::unique_ptr<OrthographicCamera> camera;
   std::unique_ptr<Window> window;
-  pacman::Level level_map;
 
+  bool game_over = false;
+  pacman::Level level_map;
   std::unique_ptr<pacman::Player> player;
   std::vector<pacman::Ghost> ghosts;
 };

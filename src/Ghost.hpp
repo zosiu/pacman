@@ -12,6 +12,8 @@ class Ghost {
 public:
   Ghost(glm::vec4 color, glm::vec2 starting_position, Direction starting_direction, float speed, const Level *level);
 
+  const glm::vec2& get_position() const;
+
   void update();
   void render();
 

@@ -15,6 +15,7 @@ public:
   Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, const Level *level);
 
   const glm::vec2 &get_position() const;
+  glm::vec<2, int> get_tile() const;
   Direction get_direction() const;
   Direction get_requested_direction() const;
 

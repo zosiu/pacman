@@ -8,6 +8,8 @@ Ghost::Ghost(glm::vec4 color, glm::vec2 starting_position, Direction starting_di
              const Level *level)
     : color(std::move(color)), movement(starting_position, starting_direction, speed, level) {}
 
+const glm::vec2 &Ghost::get_position() const { return movement.get_position(); }
+
 void Ghost::update() {
   movement.move();
 

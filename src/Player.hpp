@@ -17,6 +17,10 @@ public:
   void render();
 
 private:
+  void render_body();
+  void render_mouth();
+
+private:
   glm::vec4 color = {1.0f, 1.0f, 0.0f, 1.0f};
   Movement movement;
 };

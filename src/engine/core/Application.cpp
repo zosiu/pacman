@@ -15,6 +15,10 @@ Application::Application(uint16_t width, uint16_t height) {
   float aspect_ratio = (float)width / (float)height;
   camera = std::make_unique<OrthographicCamera>(-aspect_ratio, aspect_ratio, -1.0, 1.0);
   BatchRenderer2D::init();
+  player_movement =
+      std::make_unique<pacman::Movement>(pacman::Movement({11, 13}, pacman::Direction::Right, 215.0f, &level_map));
+  ghost_movement =
+      std::make_unique<pacman::Movement>(pacman::Movement({1, 1}, pacman::Direction::Right, 190.0f, &level_map));
 }
 
 Application::~Application() { BatchRenderer2D::destroy(); }
@@ -35,10 +39,8 @@ void Application::run() {
   OpenGLShaderProgram::upload_model_transformation_uniform(model_transform);
   OpenGLShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
 
-  player_pos = {11, 13};
-  player_dir = {1, 0};
-
   double last_time = glfwGetTime();
+  srand(last_time);
   double now_time = 0;
   double delta_ms = 0;
 
@@ -53,44 +55,45 @@ void Application::run() {
     BatchRenderer2D::begin_batch();
 
     level_map.render();
-    BatchRenderer2D::draw_quad(player_pos, {1, 1}, {1.0f, 1.0f, 0.0f, 1.0f});
+    BatchRenderer2D::draw_quad(player_movement->get_position(), {1, 1}, {1.0f, 1.0f, 0.0f, 1.0f});
+    BatchRenderer2D::draw_quad(ghost_movement->get_position(), {1, 1}, {1.0f, 0.0f, 1.0f, 1.0f});
+
     BatchRenderer2D::end_batch();
     BatchRenderer2D::flush();
     window->on_update();
 
-    constexpr float ms_per_tile = 215;
     for (size_t i = 0; i < delta_ms; ++i) {
-      int tile_x = floorf(player_pos.x);
-      int tile_y = floorf(player_pos.y);
+      player_movement->move();
+      ghost_movement->move();
 
-      bool on_tile_x_edge = (int(player_pos.x * ms_per_tile) % int(ms_per_tile) == 0);
-      bool on_tile_y_edge = (int(player_pos.y * ms_per_tile) % int(ms_per_tile) == 0);
-      bool on_tile_edge = player_dir.x == 0 ? on_tile_y_edge : on_tile_x_edge;
-
-      bool can_go_up = on_tile_x_edge && (level_map.at(tile_x, tile_y - 1) == pacman::Tile::Floor);
-      bool can_go_down = on_tile_x_edge && (level_map.at(tile_x, tile_y + 1) == pacman::Tile::Floor);
-      bool can_go_left = on_tile_y_edge && (level_map.at(tile_x - 1, tile_y) == pacman::Tile::Floor);
-      bool can_go_right = on_tile_y_edge && (level_map.at(tile_x + 1, tile_y) == pacman::Tile::Floor);
-
-      if ((requested_dir.x == 1 && requested_dir.y == 0 && can_go_right) ||
-          (requested_dir.x == -1 && requested_dir.y == 0 && can_go_left) ||
-          (requested_dir.x == 0 && requested_dir.y == 1 && can_go_down) ||
-          (requested_dir.x == 0 && requested_dir.y == -1 && can_go_up)) {
-        player_dir = requested_dir;
-        requested_dir = {0, 0};
+      std::array<pacman::Direction, 4> directions = {pacman::Direction::Up, pacman::Direction::Down,
+                                                     pacman::Direction::Left, pacman::Direction::Right};
+      pacman::Direction opposite = pacman::Direction::None;
+      switch (ghost_movement->get_direction()) {
+      case pacman::Direction::Up:
+        opposite = pacman::Direction::Down;
+        break;
+      case pacman::Direction::Down:
+        opposite = pacman::Direction::Up;
+        break;
+      case pacman::Direction::Left:
+        opposite = pacman::Direction::Right;
+        break;
+      case pacman::Direction::Right:
+        opposite = pacman::Direction::Left;
+        break;
+      case pacman::Direction::None:
+        break;
       }
 
-      int next_tile_x = tile_x + player_dir.x;
-      int next_tile_y = tile_y + player_dir.y;
-      bool blocked = on_tile_edge && (level_map.at(next_tile_x, next_tile_y) != pacman::Tile::Floor);
+      std::remove(directions.begin(), directions.end(), opposite);
 
-      if (!blocked) {
-        player_pos.x = player_pos.x + player_dir.x / ms_per_tile;
-        player_pos.y = player_pos.y + player_dir.y / ms_per_tile;
+      if (ghost_movement->get_requested_direction() == pacman::Direction::None) {
+        ghost_movement->request_direction(directions[rand() % 3]);
       }
     }
   }
-} // namespace engine
+}
 
 void Application::on_event(const Event &event) {
   Event::dispatch<KeyPressedEvent>(event, [this](const engine::KeyPressedEvent &key_press_event) {
@@ -99,19 +102,19 @@ void Application::on_event(const Event &event) {
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Left) {
-      this->requested_dir = {-1, 0};
+      this->player_movement->request_direction(pacman::Direction::Left);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Right) {
-      this->requested_dir = {1, 0};
+      this->player_movement->request_direction(pacman::Direction::Right);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Up) {
-      this->requested_dir = {0, -1};
+      this->player_movement->request_direction(pacman::Direction::Up);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Down) {
-      this->requested_dir = {0, 1};
+      this->player_movement->request_direction(pacman::Direction::Down);
     }
   });
 

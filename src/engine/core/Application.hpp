@@ -4,6 +4,7 @@
 #define BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 
 #include "../../Level.hpp"
+#include "../../Movement.hpp"
 #include "../../pch.hpp"
 #include "../events/ApplicationEvents.hpp"
 #include "../events/Event.hpp"
@@ -29,10 +30,10 @@ private:
   bool running = true;
   std::unique_ptr<OrthographicCamera> camera;
   std::unique_ptr<Window> window;
-  glm::vec2 player_pos;
-  glm::vec<2, int> player_dir;
-  glm::vec<2, int> requested_dir = {0, 0};
   pacman::Level level_map;
+  std::unique_ptr<pacman::Movement> player_movement;
+
+  std::unique_ptr<pacman::Movement> ghost_movement;
 };
 
 } // namespace engine

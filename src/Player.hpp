@@ -9,10 +9,11 @@ namespace pacman {
 
 class Player {
 public:
-  Player(glm::vec2 starting_position, Direction starting_direction, float speed, const Level *level);
+  Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level);
 
   void request_direction(Direction direction);
   const glm::vec2 &get_position() const;
+  glm::vec<2, int> get_tile() const;
 
   void update();
   void render();

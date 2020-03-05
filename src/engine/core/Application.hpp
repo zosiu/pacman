@@ -12,6 +12,7 @@
 #include "../utils/OrthographicCamera.hpp"
 #include "Window.hpp"
 #include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 namespace engine {
 

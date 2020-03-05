@@ -99,6 +99,9 @@ void Application::run() {
           ghost.update();
       }
     }
+
+    if (level_map.no_more_pellets())
+      game_state = GameState::Won;
   }
 }
 

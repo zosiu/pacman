@@ -3,7 +3,7 @@
 
 namespace pacman {
 
-Movement::Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, const Level *level)
+Movement::Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, Level *level)
     : position(std::move(starting_position)), direction(starting_direction), speed(ms_per_tile), level(level) {}
 
 const glm::vec2 &Movement::get_position() const { return position; }
@@ -13,6 +13,8 @@ glm::vec<2, int> Movement::get_tile() const { return {(int)floorf(position.x), (
 Direction Movement::get_direction() const { return direction; }
 
 Direction Movement::get_requested_direction() const { return requested_direction; }
+
+Level *Movement::get_level() const { return level; }
 
 void Movement::move() {
   int tile_x = floorf(position.x);

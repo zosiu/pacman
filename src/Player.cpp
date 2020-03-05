@@ -4,10 +4,13 @@
 
 namespace pacman {
 
-Player::Player(glm::vec2 starting_position, Direction starting_direction, float speed, const Level *level)
+Player::Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level)
     : movement(starting_position, starting_direction, speed, level) {}
 
-void Player::update() { movement.move(); }
+void Player::update() {
+  movement.move();
+  movement.get_level()->erase_pellet(movement.get_tile());
+}
 
 void Player::render() {
   render_body();
@@ -84,5 +87,6 @@ void Player::render_mouth() {
 void Player::request_direction(Direction direction) { movement.request_direction(direction); }
 
 const glm::vec2 &Player::get_position() const { return movement.get_position(); }
+glm::vec<2, int> Player::get_tile() const { return movement.get_tile(); }
 
 } // namespace pacman

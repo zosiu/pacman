@@ -15,10 +15,16 @@ Application::Application(uint16_t width, uint16_t height) {
   float aspect_ratio = (float)width / (float)height;
   camera = std::make_unique<OrthographicCamera>(-aspect_ratio, aspect_ratio, -1.0, 1.0);
   BatchRenderer2D::init();
+
   player_movement =
       std::make_unique<pacman::Movement>(pacman::Movement({11, 13}, pacman::Direction::Right, 215.0f, &level_map));
-  ghost_movement =
-      std::make_unique<pacman::Movement>(pacman::Movement({1, 1}, pacman::Direction::Right, 190.0f, &level_map));
+  ghosts = {
+      // TODO: get rid of the magic corner numbers
+      pacman::Ghost({1.0f, 0.0f, 0.0f, 1.0f}, {1, 1}, pacman::Direction::Right, 190.0f, &level_map),
+      pacman::Ghost({1.0f, 0.5f, 1.0f, 1.0f}, {1, 21}, pacman::Direction::Left, 190.0f, &level_map),
+      pacman::Ghost({0.0f, 1.0f, 1.0f, 1.0f}, {21, 1}, pacman::Direction::Right, 190.0f, &level_map),
+      pacman::Ghost({1.0f, 0.5f, 0.25f, 1.0f}, {21, 21}, pacman::Direction::Left, 190.0f, &level_map),
+  };
 }
 
 Application::~Application() { BatchRenderer2D::destroy(); }
@@ -56,7 +62,8 @@ void Application::run() {
 
     level_map.render();
     BatchRenderer2D::draw_quad(player_movement->get_position(), {1, 1}, {1.0f, 1.0f, 0.0f, 1.0f});
-    BatchRenderer2D::draw_quad(ghost_movement->get_position(), {1, 1}, {1.0f, 0.0f, 1.0f, 1.0f});
+    for (auto &ghost : ghosts)
+      ghost.render();
 
     BatchRenderer2D::end_batch();
     BatchRenderer2D::flush();
@@ -64,33 +71,9 @@ void Application::run() {
 
     for (size_t i = 0; i < delta_ms; ++i) {
       player_movement->move();
-      ghost_movement->move();
 
-      std::array<pacman::Direction, 4> directions = {pacman::Direction::Up, pacman::Direction::Down,
-                                                     pacman::Direction::Left, pacman::Direction::Right};
-      pacman::Direction opposite = pacman::Direction::None;
-      switch (ghost_movement->get_direction()) {
-      case pacman::Direction::Up:
-        opposite = pacman::Direction::Down;
-        break;
-      case pacman::Direction::Down:
-        opposite = pacman::Direction::Up;
-        break;
-      case pacman::Direction::Left:
-        opposite = pacman::Direction::Right;
-        break;
-      case pacman::Direction::Right:
-        opposite = pacman::Direction::Left;
-        break;
-      case pacman::Direction::None:
-        break;
-      }
-
-      std::remove(directions.begin(), directions.end(), opposite);
-
-      if (ghost_movement->get_requested_direction() == pacman::Direction::None) {
-        ghost_movement->request_direction(directions[rand() % 3]);
-      }
+      for (auto &ghost : ghosts)
+        ghost.update();
     }
   }
 }

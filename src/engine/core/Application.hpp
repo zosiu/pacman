@@ -3,6 +3,7 @@
 #ifndef BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 #define BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 
+#include "../../Ghost.hpp"
 #include "../../Level.hpp"
 #include "../../Movement.hpp"
 #include "../../pch.hpp"
@@ -31,9 +32,9 @@ private:
   std::unique_ptr<OrthographicCamera> camera;
   std::unique_ptr<Window> window;
   pacman::Level level_map;
-  std::unique_ptr<pacman::Movement> player_movement;
 
-  std::unique_ptr<pacman::Movement> ghost_movement;
+  std::unique_ptr<pacman::Movement> player_movement;
+  std::vector<pacman::Ghost> ghosts;
 };
 
 } // namespace engine

@@ -107,23 +107,24 @@ void Application::run() {
 
 void Application::on_event(const Event &event) {
   Event::dispatch<KeyPressedEvent>(event, [this](const engine::KeyPressedEvent &key_press_event) {
-    if (key_press_event.get_key_code() == engine::KeyCode::Escape) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Escape ||
+        key_press_event.get_key_code() == engine::KeyCode::Q) {
       this->running = false;
     }
 
-    if (key_press_event.get_key_code() == engine::KeyCode::Left) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Left || key_press_event.get_key_code() == engine::Key::A) {
       this->player->request_direction(pacman::Direction::Left);
     }
 
-    if (key_press_event.get_key_code() == engine::KeyCode::Right) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Right || key_press_event.get_key_code() == engine::Key::D) {
       this->player->request_direction(pacman::Direction::Right);
     }
 
-    if (key_press_event.get_key_code() == engine::KeyCode::Up) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Up || key_press_event.get_key_code() == engine::Key::W) {
       this->player->request_direction(pacman::Direction::Up);
     }
 
-    if (key_press_event.get_key_code() == engine::KeyCode::Down) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Down || key_press_event.get_key_code() == engine::Key::S) {
       this->player->request_direction(pacman::Direction::Down);
     }
 

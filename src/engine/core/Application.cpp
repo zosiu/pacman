@@ -16,14 +16,22 @@ Application::Application(uint16_t width, uint16_t height) {
   camera = std::make_unique<OrthographicCamera>(-aspect_ratio, aspect_ratio, -1.0, 1.0);
   BatchRenderer2D::init();
 
-  player_movement =
-      std::make_unique<pacman::Movement>(pacman::Movement({11, 13}, pacman::Direction::Right, 215.0f, &level_map));
+  constexpr float player_ms_per_tile = 215.0f;
+  constexpr float ghost_ms_per_tile = 190.0f;
+
+  constexpr glm::vec4 red = {1.0f, 0.0f, 0.0f, 1.0f};
+  constexpr glm::vec4 pink = {1.0f, 0.5f, 1.0f, 1.0f};
+  constexpr glm::vec4 cyan = {0.0f, 1.0f, 1.0f, 1.0f};
+  constexpr glm::vec4 orange = {1.0f, 0.5f, 0.25f, 1.0f};
+
+  // TODO: get rid of the magic corner numbers
+  player = std::make_unique<pacman::Player>(glm::vec2({11, 13}), pacman::Direction::Right, 215.0f, &level_map);
+
   ghosts = {
-      // TODO: get rid of the magic corner numbers
-      pacman::Ghost({1.0f, 0.0f, 0.0f, 1.0f}, {1, 1}, pacman::Direction::Right, 190.0f, &level_map),
-      pacman::Ghost({1.0f, 0.5f, 1.0f, 1.0f}, {1, 21}, pacman::Direction::Left, 190.0f, &level_map),
-      pacman::Ghost({0.0f, 1.0f, 1.0f, 1.0f}, {21, 1}, pacman::Direction::Right, 190.0f, &level_map),
-      pacman::Ghost({1.0f, 0.5f, 0.25f, 1.0f}, {21, 21}, pacman::Direction::Left, 190.0f, &level_map),
+      pacman::Ghost(red, {1, 1}, pacman::Direction::Right, player_ms_per_tile, &level_map),
+      pacman::Ghost(pink, {1, 21}, pacman::Direction::Left, ghost_ms_per_tile, &level_map),
+      pacman::Ghost(cyan, {21, 1}, pacman::Direction::Right, ghost_ms_per_tile, &level_map),
+      pacman::Ghost(orange, {21, 21}, pacman::Direction::Left, ghost_ms_per_tile, &level_map),
   };
 }
 
@@ -61,16 +69,18 @@ void Application::run() {
     BatchRenderer2D::begin_batch();
 
     level_map.render();
-    BatchRenderer2D::draw_quad(player_movement->get_position(), {1, 1}, {1.0f, 1.0f, 0.0f, 1.0f});
+
+    player->render();
     for (auto &ghost : ghosts)
       ghost.render();
 
     BatchRenderer2D::end_batch();
     BatchRenderer2D::flush();
+
     window->on_update();
 
     for (size_t i = 0; i < delta_ms; ++i) {
-      player_movement->move();
+      player->update();
 
       for (auto &ghost : ghosts)
         ghost.update();
@@ -85,19 +95,19 @@ void Application::on_event(const Event &event) {
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Left) {
-      this->player_movement->request_direction(pacman::Direction::Left);
+      this->player->request_direction(pacman::Direction::Left);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Right) {
-      this->player_movement->request_direction(pacman::Direction::Right);
+      this->player->request_direction(pacman::Direction::Right);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Up) {
-      this->player_movement->request_direction(pacman::Direction::Up);
+      this->player->request_direction(pacman::Direction::Up);
     }
 
     if (key_press_event.get_key_code() == engine::KeyCode::Down) {
-      this->player_movement->request_direction(pacman::Direction::Down);
+      this->player->request_direction(pacman::Direction::Down);
     }
   });
 

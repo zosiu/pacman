@@ -5,7 +5,7 @@
 
 #include "../../Ghost.hpp"
 #include "../../Level.hpp"
-#include "../../Movement.hpp"
+#include "../../Player.hpp"
 #include "../../pch.hpp"
 #include "../events/ApplicationEvents.hpp"
 #include "../events/Event.hpp"
@@ -33,7 +33,7 @@ private:
   std::unique_ptr<Window> window;
   pacman::Level level_map;
 
-  std::unique_ptr<pacman::Movement> player_movement;
+  std::unique_ptr<pacman::Player> player;
   std::vector<pacman::Ghost> ghosts;
 };
 

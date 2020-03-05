@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include "../../Text.hpp"
 #include "../../pch.hpp"
 #include "../OpenGL/OpenGLShaderProgram.hpp"
 #include "../OpenGL/renderer/BatchRenderer2D.hpp"
@@ -74,16 +75,23 @@ void Application::run() {
     for (auto &ghost : ghosts)
       ghost.render();
 
+    if (game_state == GameState::Lost)
+      pacman::Text::render_you_lose({10, 11});
+    if (game_state == GameState::Won)
+      pacman::Text::render_you_win({10, 11});
+
     BatchRenderer2D::end_batch();
     BatchRenderer2D::flush();
 
     window->on_update();
 
-    game_over = (std::any_of(ghosts.begin(), ghosts.end(), [this](const pacman::Ghost &ghost) {
-      return glm::distance(ghost.get_position(), this->player->get_position()) < 0.9f;
-    }));
+    if (std::any_of(ghosts.begin(), ghosts.end(), [this](const pacman::Ghost &ghost) {
+          return glm::distance(ghost.get_position(), this->player->get_position()) < 0.9f;
+        })) {
+      game_state = GameState::Lost;
+    };
 
-    if (!game_over) {
+    if (game_state == GameState::InProgress) {
       for (size_t i = 0; i < delta_ms; ++i) {
         player->update();
 

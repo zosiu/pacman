@@ -15,6 +15,8 @@
 
 namespace engine {
 
+enum class GameState { InProgress, Won, Lost };
+
 class Application {
 public:
   Application(uint16_t width = 1024, uint16_t height = 768);
@@ -32,7 +34,7 @@ private:
   std::unique_ptr<OrthographicCamera> camera;
   std::unique_ptr<Window> window;
 
-  bool game_over = false;
+  GameState game_state = GameState::InProgress;
   pacman::Level level_map;
   std::unique_ptr<pacman::Player> player;
   std::vector<pacman::Ghost> ghosts;

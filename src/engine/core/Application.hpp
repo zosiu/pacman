@@ -16,7 +16,7 @@
 
 namespace engine {
 
-enum class GameState { InProgress, Won, Lost };
+enum class GameState { Paused, InProgress, Won, Lost };
 
 class Application {
 public:
@@ -25,6 +25,7 @@ public:
 
   void run();
   void on_event(const Event &event);
+  void toggle_pause();
 
 private:
   void on_window_close(const WindowClosedEvent &event);
@@ -35,7 +36,7 @@ private:
   std::unique_ptr<OrthographicCamera> camera;
   std::unique_ptr<Window> window;
 
-  GameState game_state = GameState::InProgress;
+  GameState game_state = GameState::Paused;
   pacman::Level level_map;
   std::unique_ptr<pacman::Player> player;
   std::vector<pacman::Ghost> ghosts;

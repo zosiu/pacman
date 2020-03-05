@@ -30,8 +30,8 @@ Application::Application(uint16_t width, uint16_t height) {
 
   ghosts = {
       pacman::Ghost(red, {1, 1}, pacman::Direction::Right, player_ms_per_tile, &level_map),
-      pacman::Ghost(pink, {1, 21}, pacman::Direction::Left, ghost_ms_per_tile, &level_map),
-      pacman::Ghost(cyan, {21, 1}, pacman::Direction::Right, ghost_ms_per_tile, &level_map),
+      pacman::Ghost(pink, {1, 21}, pacman::Direction::Up, ghost_ms_per_tile, &level_map),
+      pacman::Ghost(cyan, {21, 1}, pacman::Direction::Down, ghost_ms_per_tile, &level_map),
       pacman::Ghost(orange, {21, 21}, pacman::Direction::Left, ghost_ms_per_tile, &level_map),
   };
 }
@@ -126,11 +126,26 @@ void Application::on_event(const Event &event) {
     if (key_press_event.get_key_code() == engine::KeyCode::Down) {
       this->player->request_direction(pacman::Direction::Down);
     }
+
+    if (key_press_event.get_key_code() == engine::KeyCode::P) {
+      switch (this->game_state) {
+      case GameState::Lost:
+        break;
+      case GameState::Won:
+        break;
+      case GameState::Paused:
+        this->game_state = GameState::InProgress;
+        break;
+      case GameState::InProgress:
+        this->game_state = GameState::Paused;
+        break;
+      }
+    }
   });
 
   Event::dispatch<WindowClosedEvent>(event, std::bind(&Application::on_window_close, this, std::placeholders::_1));
   Event::dispatch<WindowResizedEvent>(event, std::bind(&Application::on_window_resize, this, std::placeholders::_1));
-}
+} // namespace engine
 
 void Application::on_window_close(const WindowClosedEvent & /* event */) { running = false; }
 

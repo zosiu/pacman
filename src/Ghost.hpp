@@ -15,12 +15,12 @@ public:
   const glm::vec2 &get_position() const;
 
   void update();
-  void render();
+  void render() const;
 
 private:
-  void render_body();
-  void render_pupils();
-  void render_eye_whites();
+  void render_body() const;
+  void render_pupils() const;
+  void render_eye_whites() const;
 
 private:
   glm::vec4 color;

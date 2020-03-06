@@ -27,7 +27,7 @@ public:
   bool no_more_pellets() const;
   void erase_pellet(const glm::vec<2, int> &tile);
 
-  void render();
+  void render() const;
 
 private:
   std::unordered_set<glm::vec2, Vec2KeyFunc, Vec2KeyFunc> pellets;

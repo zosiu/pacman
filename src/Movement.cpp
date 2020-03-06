@@ -60,7 +60,7 @@ void Movement::move() {
 
   bool on_tile_edge =
       ((direction == Direction::Up) || (direction == Direction::Down)) ? on_tile_y_edge : on_tile_x_edge;
-  bool blocked = on_tile_edge && (level->at(next_tile_x, next_tile_y) != pacman::Tile::Floor);
+  bool blocked = on_tile_edge && (level->at(next_tile_x, next_tile_y) != Tile::Floor);
 
   if (blocked) {
     requested_direction = Direction::None;

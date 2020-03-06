@@ -12,12 +12,12 @@ void Player::update() {
   movement.get_level()->erase_pellet(movement.get_tile());
 }
 
-void Player::render() {
+void Player::render() const {
   render_body();
   render_mouth();
 }
 
-void Player::render_body() {
+void Player::render_body() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
@@ -38,7 +38,7 @@ void Player::render_body() {
   engine::BatchRenderer2D::draw_quad({pos_x + 6 / 9.0, pos_y + 8 / 9.0}, {3 / 9.0, 1 / 9.0}, bg_color);
 }
 
-void Player::render_mouth() {
+void Player::render_mouth() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 

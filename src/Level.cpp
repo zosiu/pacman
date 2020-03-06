@@ -27,7 +27,7 @@ Tile Level::at(int x, int y) const {
   return layout.at(y).at(x);
 }
 
-void Level::render() {
+void Level::render() const {
   const glm::vec2 tile_size{1, 1};
 
   for (size_t y = 0; y < number_of_rows(); ++y) {

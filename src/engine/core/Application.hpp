@@ -3,29 +3,22 @@
 #ifndef BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 #define BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 
-#include "../../Ghost.hpp"
-#include "../../Level.hpp"
-#include "../../Player.hpp"
 #include "../../pch.hpp"
 #include "../events/ApplicationEvents.hpp"
 #include "../events/Event.hpp"
 #include "../utils/OrthographicCamera.hpp"
+#include "Layer.hpp"
 #include "Window.hpp"
-#include <glm/glm.hpp>
-#include <glm/gtx/string_cast.hpp>
 
 namespace engine {
 
-enum class GameState { Paused, InProgress, Won, Lost };
-
 class Application {
 public:
-  Application(uint16_t width = 1024, uint16_t height = 768);
-  ~Application();
+  Application(const std::string &window_name, uint16_t width = 1024, uint16_t height = 768);
 
   void run();
   void on_event(const Event &event);
-  void toggle_pause();
+  void attach_layer(Layer *layer);
 
 private:
   void on_window_close(const WindowClosedEvent &event);
@@ -33,13 +26,11 @@ private:
 
 private:
   bool running = true;
-  std::unique_ptr<OrthographicCamera> camera;
-  std::unique_ptr<Window> window;
+  float last_frame_time = 0.0f;
 
-  GameState game_state = GameState::Paused;
-  pacman::Level level_map;
-  std::unique_ptr<pacman::Player> player;
-  std::vector<pacman::Ghost> ghosts;
+  std::unique_ptr<Window> window;
+  std::unique_ptr<OrthographicCamera> camera;
+  std::vector<Layer *> layers;
 };
 
 } // namespace engine

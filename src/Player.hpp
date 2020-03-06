@@ -16,11 +16,11 @@ public:
   glm::vec<2, int> get_tile() const;
 
   void update();
-  void render();
+  void render() const;
 
 private:
-  void render_body();
-  void render_mouth();
+  void render_body() const;
+  void render_mouth() const;
 
 private:
   glm::vec4 color = {1.0f, 1.0f, 0.0f, 1.0f};

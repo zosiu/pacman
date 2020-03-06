@@ -18,13 +18,13 @@ void Ghost::update() {
   case Direction::Up:
     opposite = Direction::Down;
     break;
-  case pacman::Direction::Down:
+  case Direction::Down:
     opposite = Direction::Up;
     break;
-  case pacman::Direction::Left:
+  case Direction::Left:
     opposite = Direction::Right;
     break;
-  case pacman::Direction::Right:
+  case Direction::Right:
     opposite = Direction::Left;
     break;
   case Direction::None:
@@ -38,13 +38,13 @@ void Ghost::update() {
   }
 }
 
-void Ghost::render() {
+void Ghost::render() const {
   render_body();
   render_eye_whites();
   render_pupils();
 }
 
-void Ghost::render_body() {
+void Ghost::render_body() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
@@ -63,7 +63,7 @@ void Ghost::render_body() {
   engine::BatchRenderer2D::draw_quad({pos_x + 7 / 9.0, pos_y + 8 / 9.0}, {1 / 9.0, 1 / 9.0}, bg_color);
 }
 
-void Ghost::render_pupils() {
+void Ghost::render_pupils() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
@@ -91,7 +91,7 @@ void Ghost::render_pupils() {
   engine::BatchRenderer2D::draw_quad({starting_pos.x + 4 / 9.0, starting_pos.y}, pupil_size, dark_blue);
 }
 
-void Ghost::render_eye_whites() {
+void Ghost::render_eye_whites() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 

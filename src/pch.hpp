@@ -16,6 +16,7 @@
 
 #include <functional>
 #include <memory>
+#include <algorithm>
 
 #include "engine/core/Logger.hpp"
 

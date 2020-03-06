@@ -42,7 +42,7 @@ void Application::run() {
   engine::OpenGLShaderProgram program("shaders/base.vert.glsl", "shaders/base.frag.glsl");
   program.bind();
 
-  const auto [min_tiles, max_tiles] = std::minmax(level_map.number_of_columns(), level_map.number_of_rows());
+  const auto [min_tiles, max_tiles] = std::minmax({level_map.number_of_columns(), level_map.number_of_rows()});
   const float t = 2.0f / (float)max_tiles;
   const float x_correction =
       level_map.number_of_columns() < level_map.number_of_rows() ? (max_tiles - min_tiles) / float(max_tiles) : 0.0f;

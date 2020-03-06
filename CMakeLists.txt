@@ -3,6 +3,7 @@ cmake_minimum_required (VERSION 3.16)
 project (Pacman)
 
 
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set (CMAKE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src/")
 file (GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/*.cpp")
 set (CMAKE_BINARY_DIR "${PROJECT_SOURCE_DIR}/bin/")

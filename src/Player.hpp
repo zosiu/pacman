@@ -25,6 +25,8 @@ private:
   void render_mouth() const;
 
 private:
+  glm::vec4 color = {1.0f, 1.0f, 0.0f, 1.0f};
+  Level *level_map;
   Movement movement;
 };
 

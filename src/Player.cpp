@@ -8,11 +8,11 @@ namespace pacman {
 constexpr glm::vec4 COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
 
 Player::Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level)
-    : movement(starting_position, starting_direction, speed, level) {}
+    : level_map(level), movement(starting_position, starting_direction, speed, level) {}
 
 void Player::update() {
   movement.move();
-  movement.get_level()->erase_pellet(movement.get_tile());
+  level_map->erase_pellet(movement.get_tile());
 }
 
 void Player::render() const {

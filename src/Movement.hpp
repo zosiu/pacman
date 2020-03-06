@@ -12,13 +12,12 @@ enum class Direction { None, Up, Down, Left, Right };
 
 class Movement {
 public:
-  Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, Level *level);
+  Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, const Level *level);
 
   const glm::vec2 &get_position() const;
   glm::vec<2, int> get_tile() const;
   Direction get_direction() const;
   Direction get_requested_direction() const;
-  Level *get_level() const;
 
   void move();
   void request_direction(Direction direction);
@@ -29,7 +28,7 @@ private:
   float speed;
   Direction requested_direction = Direction::None;
 
-  Level *level;
+  const Level *level;
 };
 
 } // namespace pacman

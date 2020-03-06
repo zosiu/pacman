@@ -1,7 +1,11 @@
 #include "Level.hpp"
 #include "./engine/OpenGL/renderer/BatchRenderer2D.hpp"
+#include "Constants.hpp"
 
 namespace pacman {
+
+constexpr glm::vec4 COLOR_WALL = {0.0f, 0.0f, 0.4f, 1.0f};
+constexpr glm::vec4 COLOR_PELLET = {1.0f, 1.0f, 1.0f, 1.0f};
 
 Level::Level() {
   for (size_t y = 0; y < number_of_rows(); ++y) {
@@ -36,10 +40,10 @@ void Level::render() const {
 
       switch (layout[y][x]) {
       case Tile::Wall:
-        engine::BatchRenderer2D::draw_quad(pos, tile_size, {0.0f, 0.0f, 0.5f, 1.0f});
+        engine::BatchRenderer2D::draw_quad(pos, tile_size, COLOR_WALL);
         break;
       case Tile::Floor:
-        engine::BatchRenderer2D::draw_quad(pos, tile_size, {0.0f, 0.0f, 0.0f, 1.0f});
+        engine::BatchRenderer2D::draw_quad(pos, tile_size, COLOR_FLOOR);
         break;
       case Tile::Void:
         break;
@@ -48,8 +52,7 @@ void Level::render() const {
   }
 
   for (const auto &pellet : pellets) {
-    engine::BatchRenderer2D::draw_quad({pellet.x + 4 / 9.0, pellet.y + 4 / 9.0}, {1 / 9.0, 1 / 9.0},
-                                       {1.0f, 1.0f, 1.0f, 1.0f});
+    engine::BatchRenderer2D::draw_quad({pellet.x + 4 / 9.0, pellet.y + 4 / 9.0}, {1 / 9.0, 1 / 9.0}, COLOR_PELLET);
   }
 }
 

@@ -1,8 +1,11 @@
 #include "Player.hpp"
 #include "engine/OpenGL/renderer/BatchRenderer2D.hpp"
 #include "pch.hpp"
+#include "Constants.hpp"
 
 namespace pacman {
+
+constexpr glm::vec4 COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
 
 Player::Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level)
     : movement(starting_position, starting_direction, speed, level) {}
@@ -21,28 +24,24 @@ void Player::render_body() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  glm::vec4 bg_color = {0.0f, 0.0f, 0.0f, 1.0f};
+  engine::BatchRenderer2D::draw_quad({pos_x, pos_y}, {1, 1}, COLOR_PLAYER);
 
-  engine::BatchRenderer2D::draw_quad({pos_x, pos_y}, {1, 1}, color);
+  engine::BatchRenderer2D::draw_quad({pos_x, pos_y}, {3 / 9.0, 1 / 9.0}, COLOR_FLOOR);
+  engine::BatchRenderer2D::draw_quad({pos_x + 6 / 9.0, pos_y}, {3 / 9.0, 1 / 9.0}, COLOR_FLOOR);
 
-  engine::BatchRenderer2D::draw_quad({pos_x, pos_y}, {3 / 9.0, 1 / 9.0}, bg_color);
-  engine::BatchRenderer2D::draw_quad({pos_x + 6 / 9.0, pos_y}, {3 / 9.0, 1 / 9.0}, bg_color);
+  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 1 / 9.0}, {1 / 9.0, 2 / 9.0}, COLOR_FLOOR);
+  engine::BatchRenderer2D::draw_quad({pos_x + 8 / 9.0, pos_y + 1 / 9.0}, {1 / 9.0, 2 / 9.0}, COLOR_FLOOR);
 
-  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 1 / 9.0}, {1 / 9.0, 2 / 9.0}, bg_color);
-  engine::BatchRenderer2D::draw_quad({pos_x + 8 / 9.0, pos_y + 1 / 9.0}, {1 / 9.0, 2 / 9.0}, bg_color);
+  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 6 / 9.0}, {1 / 9.0, 2 / 9.0}, COLOR_FLOOR);
+  engine::BatchRenderer2D::draw_quad({pos_x + 8 / 9.0, pos_y + 6 / 9.0}, {1 / 9.0, 2 / 9.0}, COLOR_FLOOR);
 
-  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 6 / 9.0}, {1 / 9.0, 2 / 9.0}, bg_color);
-  engine::BatchRenderer2D::draw_quad({pos_x + 8 / 9.0, pos_y + 6 / 9.0}, {1 / 9.0, 2 / 9.0}, bg_color);
-
-  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 8 / 9.0}, {3 / 9.0, 1 / 9.0}, bg_color);
-  engine::BatchRenderer2D::draw_quad({pos_x + 6 / 9.0, pos_y + 8 / 9.0}, {3 / 9.0, 1 / 9.0}, bg_color);
+  engine::BatchRenderer2D::draw_quad({pos_x, pos_y + 8 / 9.0}, {3 / 9.0, 1 / 9.0}, COLOR_FLOOR);
+  engine::BatchRenderer2D::draw_quad({pos_x + 6 / 9.0, pos_y + 8 / 9.0}, {3 / 9.0, 1 / 9.0}, COLOR_FLOOR);
 }
 
 void Player::render_mouth() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
-
-  const glm::vec4 bg_color = {0.0f, 0.0f, 0.0f, 1.0f};
 
   glm::vec2 mouth_starting_pos;
   glm::vec2 lip1_starting_pos;
@@ -79,9 +78,9 @@ void Player::render_mouth() const {
     break;
   }
 
-  engine::BatchRenderer2D::draw_quad(mouth_starting_pos, mouth_size, bg_color);
-  engine::BatchRenderer2D::draw_quad(lip1_starting_pos, lip_size, color);
-  engine::BatchRenderer2D::draw_quad(lip2_starting_pos, lip_size, color);
+  engine::BatchRenderer2D::draw_quad(mouth_starting_pos, mouth_size, COLOR_FLOOR);
+  engine::BatchRenderer2D::draw_quad(lip1_starting_pos, lip_size, COLOR_PLAYER);
+  engine::BatchRenderer2D::draw_quad(lip2_starting_pos, lip_size, COLOR_PLAYER);
 }
 
 void Player::request_direction(Direction direction) { movement.request_direction(direction); }

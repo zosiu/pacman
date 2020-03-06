@@ -5,26 +5,26 @@
 
 namespace pacman {
 
+constexpr float PLAYER_MS_PER_TILE = 215.0f;
+constexpr float GHOST_MS_PER_TILE = 190.0f;
+
+constexpr glm::vec4 COLOR_RED_GHOST = {1.0f, 0.0f, 0.0f, 1.0f};
+constexpr glm::vec4 COLOR_PINK_GHOST = {1.0f, 0.5f, 1.0f, 1.0f};
+constexpr glm::vec4 COLOR_CYAN_GHOST = {0.0f, 1.0f, 1.0f, 1.0f};
+constexpr glm::vec4 COLOR_ORANGE_GHOST = {1.0f, 0.5f, 0.25f, 1.0f};
+
+constexpr glm::vec4 COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
+
 GameLayer::GameLayer() : Layer() {
-  constexpr float player_ms_per_tile = 215.0f;
-  constexpr float ghost_ms_per_tile = 190.0f;
-
-  constexpr glm::vec4 red = {1.0f, 0.0f, 0.0f, 1.0f};
-  constexpr glm::vec4 pink = {1.0f, 0.5f, 1.0f, 1.0f};
-  constexpr glm::vec4 cyan = {0.0f, 1.0f, 1.0f, 1.0f};
-  constexpr glm::vec4 orange = {1.0f, 0.5f, 0.25f, 1.0f};
-
-  // TODO: get rid of the magic corner numbers
-  player = std::make_unique<Player>(glm::vec2({11, 13}), Direction::Right, 215.0f, &level_map);
+  engine::BatchRenderer2D::init();
 
   ghosts = {
-      Ghost(red, {1, 1}, Direction::Right, player_ms_per_tile, &level_map),
-      Ghost(pink, {1, 21}, Direction::Up, ghost_ms_per_tile, &level_map),
-      Ghost(cyan, {21, 1}, Direction::Down, ghost_ms_per_tile, &level_map),
-      Ghost(orange, {21, 21}, Direction::Left, ghost_ms_per_tile, &level_map),
+      Ghost(COLOR_RED_GHOST, {1, 1}, Direction::Right, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_PINK_GHOST, {1, 21}, Direction::Up, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_CYAN_GHOST, {21, 1}, Direction::Down, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_ORANGE_GHOST, {21, 21}, Direction::Left, GHOST_MS_PER_TILE, &level_map),
   };
-
-  engine::BatchRenderer2D::init();
+  player = std::make_unique<Player>(glm::vec2({11, 13}), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
 }
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }
@@ -43,7 +43,6 @@ void GameLayer::on_attach() {
                                           {-1.0f + x_correction, 1.0f, 0.0, 1.0}});
 
   engine::OpenGLShaderProgram::upload_model_transformation_uniform(model_transform);
-  engine::BatchRenderer2D::init();
 }
 
 void GameLayer::on_update(float time_since_last_update_in_ms) {
@@ -72,7 +71,7 @@ void GameLayer::update(float time_since_last_update_in_ms) {
 }
 
 void GameLayer::render() const {
-  glClearColor(0.0, 0.0, 0.0, 1.0);
+  glClearColor(COLOR_BACKGROUND.x, COLOR_BACKGROUND.y, COLOR_BACKGROUND.z, COLOR_BACKGROUND.w);
   glClear(GL_COLOR_BUFFER_BIT);
 
   engine::BatchRenderer2D::begin_batch();
@@ -84,9 +83,9 @@ void GameLayer::render() const {
     ghost.render();
 
   if (game_state == GameState::Lost)
-    Text::render_you_lose({10, 11});
+    Text::render_you_lose({10, 10.5});
   if (game_state == GameState::Won)
-    Text::render_you_win({10, 11});
+    Text::render_you_win({10, 10.5});
 
   engine::BatchRenderer2D::end_batch();
   engine::BatchRenderer2D::flush();

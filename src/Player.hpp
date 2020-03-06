@@ -3,6 +3,8 @@
 #define DB12CA75_E9FF_4514_A818_F4962D72FB13
 
 #include "Movement.hpp"
+#include "Level.hpp"
+#include "Constants.hpp"
 #include "glm/glm.hpp"
 
 namespace pacman {
@@ -23,7 +25,6 @@ private:
   void render_mouth() const;
 
 private:
-  glm::vec4 color = {1.0f, 1.0f, 0.0f, 1.0f};
   Movement movement;
 };
 

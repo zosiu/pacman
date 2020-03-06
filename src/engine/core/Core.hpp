@@ -4,8 +4,10 @@
 #define BBD15B48_D134_3B08_114E_60D614CCA16E
 
 namespace engine {
-inline constexpr int MINIMUM_OPENGL_MAJOR_VERSION = 4;
-inline constexpr int MINIMUM_OPENGL_MINOR_VERSION = 0;
+
+constexpr int MINIMUM_OPENGL_MAJOR_VERSION = 4;
+constexpr int MINIMUM_OPENGL_MINOR_VERSION = 0;
+
 } // namespace engine
 
 #ifdef DEBUG

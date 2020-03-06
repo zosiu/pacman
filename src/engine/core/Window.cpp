@@ -34,6 +34,10 @@ void Window::create(const WindowProps &window_props) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, MINIMUM_OPENGL_MINOR_VERSION);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
 
+#ifdef DEBUG
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
+#endif
+
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #else

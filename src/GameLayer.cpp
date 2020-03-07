@@ -92,6 +92,8 @@ void GameLayer::render() const {
     Text::render_you_lose({level_map.center_floor().x - 1, level_map.center_floor().y - 2.5});
   if (game_state == GameState::Won)
     Text::render_you_win({level_map.center_floor().x - 1, level_map.center_floor().y - 2.5});
+  if (game_state == GameState::Paused)
+    Text::render_press_p({level_map.center_floor().x - 2, level_map.center_floor().y - 2.5});
 
   engine::BatchRenderer2D::end_batch();
   engine::BatchRenderer2D::flush();

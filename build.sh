@@ -1,4 +1,5 @@
 #!/bin/sh
 
-cmake -G "Unix Makefiles" -B build -DCMAKE_BUILD_TYPE=Debug
+build_type=${1:-Debug}
+cmake -G "Unix Makefiles" -B build -DCMAKE_BUILD_TYPE=$build_type
 make -C build

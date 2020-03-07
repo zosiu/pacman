@@ -3,12 +3,14 @@
 #ifndef A183409F_A75D_4B50_81DE_1D279D10F4E4
 #define A183409F_A75D_4B50_81DE_1D279D10F4E4
 
-#include "engine/core/Layer.hpp"
-#include "engine/events/KeyEvents.hpp"
-#include "engine/OpenGL/ShaderProgram.hpp"
-#include "Player.hpp"
 #include "Ghost.hpp"
 #include "Level.hpp"
+#include "Player.hpp"
+
+#include "engine/OpenGL/ShaderProgram.hpp"
+#include "engine/core/Layer.hpp"
+#include "engine/events/Event.hpp"
+#include "engine/events/KeyEvents.hpp"
 
 namespace pacman {
 

@@ -3,8 +3,6 @@
 #ifndef B3313634_D134_3B0D_1651_64583BB067DE
 #define B3313634_D134_3B0D_1651_64583BB067DE
 
-#include <glm/glm.hpp>
-
 namespace engine {
 
 class BatchRenderer2D {

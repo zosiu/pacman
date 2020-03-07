@@ -1,7 +1,10 @@
-#include "Player.hpp"
-#include "engine/OpenGL/BatchRenderer2D.hpp"
 #include "pch.hpp"
+
 #include "Constants.hpp"
+
+#include "engine/OpenGL/BatchRenderer2D.hpp"
+
+#include "Player.hpp"
 
 namespace pacman {
 

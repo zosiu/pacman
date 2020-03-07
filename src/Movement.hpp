@@ -3,12 +3,10 @@
 #ifndef D9D10969_0134_3B70_CAA7_B2AA22E94C72
 #define D9D10969_0134_3B70_CAA7_B2AA22E94C72
 
+#include "Direction.hpp"
 #include "Level.hpp"
-#include <glm/glm.hpp>
 
 namespace pacman {
-
-enum class Direction { None, Up, Down, Left, Right };
 
 class Movement {
 public:

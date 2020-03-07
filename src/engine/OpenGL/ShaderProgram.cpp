@@ -1,7 +1,9 @@
-#include "ShaderProgram.hpp"
-#include "../core/Core.hpp"
-#include "../utils/File.hpp"
 #include <glm/gtc/type_ptr.hpp>
+
+#include "../utils/Assert.hpp"
+#include "../utils/File.hpp"
+
+#include "ShaderProgram.hpp"
 
 namespace engine {
 

@@ -2,8 +2,6 @@
 #ifndef A1FD79AD_8740_4EB9_8959_317F5CD3D21D
 #define A1FD79AD_8740_4EB9_8959_317F5CD3D21D
 
-#include "glm/glm.hpp"
-
 namespace pacman {
 
 class Text {

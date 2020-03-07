@@ -5,7 +5,6 @@
 
 #include "../OpenGL/OpenGLContext.hpp"
 #include "../events/Event.hpp"
-#include "Core.hpp"
 
 struct GLFWwindow;
 

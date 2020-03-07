@@ -1,6 +1,8 @@
-#include "Ghost.hpp"
-#include "engine/OpenGL/BatchRenderer2D.hpp"
 #include "pch.hpp"
+
+#include "engine/OpenGL/BatchRenderer2D.hpp"
+
+#include "Ghost.hpp"
 
 namespace pacman {
 

@@ -1,5 +1,6 @@
-#include "Movement.hpp"
 #include "pch.hpp"
+
+#include "Movement.hpp"
 
 namespace pacman {
 

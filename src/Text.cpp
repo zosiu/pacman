@@ -1,5 +1,8 @@
-#include "Text.hpp"
+#include "pch.hpp"
+
 #include "engine/OpenGL/BatchRenderer2D.hpp"
+
+#include "Text.hpp"
 
 namespace pacman {
 

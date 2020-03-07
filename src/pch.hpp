@@ -8,15 +8,17 @@
 
 #include <array>
 #include <string>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 #include <fstream>
 #include <sstream>
 
+#include <algorithm>
 #include <functional>
 #include <memory>
-#include <algorithm>
+
+#include <glm/glm.hpp>
 
 #include "engine/utils/Logger.hpp"
 

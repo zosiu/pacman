@@ -4,7 +4,6 @@
 #define FEC30CDA_0134_3B0A_1280_9930933A4E77
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 
 namespace engine {
 class ShaderProgram {

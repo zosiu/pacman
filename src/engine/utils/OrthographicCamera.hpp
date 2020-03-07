@@ -3,8 +3,6 @@
 #ifndef A52A8786_F134_3B0A_1626_212C667E4E6B
 #define A52A8786_F134_3B0A_1626_212C667E4E6B
 
-#include <glm/glm.hpp>
-
 namespace engine {
 
 class OrthographicCamera {

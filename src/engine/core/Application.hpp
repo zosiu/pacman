@@ -3,7 +3,6 @@
 #ifndef BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 #define BDAD030F_9134_3B0B_5632_EF8DD6E3142E
 
-#include "../../pch.hpp"
 #include "../events/ApplicationEvents.hpp"
 #include "../events/Event.hpp"
 #include "../utils/OrthographicCamera.hpp"

@@ -1,5 +1,6 @@
+#include "../../pch.hpp"
+
 #include "File.hpp"
-#include "../core/Core.hpp"
 
 namespace engine {
 

@@ -1,9 +1,18 @@
-#include "Window.hpp"
+#include "../../pch.hpp"
+
 #include "../events/ApplicationEvents.hpp"
 #include "../events/KeyEvents.hpp"
+#include "../utils/Assert.hpp"
+
 #include <GLFW/glfw3.h>
 
+#include "Window.hpp"
+
 namespace engine {
+
+constexpr int MINIMUM_OPENGL_MAJOR_VERSION = 4;
+constexpr int MINIMUM_OPENGL_MINOR_VERSION = 0;
+
 static uint8_t window_count = 0;
 
 Window::Window(const WindowProps &props) { create(props); }

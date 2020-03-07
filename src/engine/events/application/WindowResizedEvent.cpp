@@ -1,3 +1,5 @@
+#include "../../../pch.hpp"
+
 #include "WindowResizedEvent.hpp"
 
 namespace engine {

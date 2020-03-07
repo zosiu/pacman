@@ -1,7 +1,11 @@
-#include "Application.hpp"
+#include "../../pch.hpp"
+
 #include "../OpenGL/ShaderProgram.hpp"
 #include "../events/KeyEvents.hpp"
+
 #include <GLFW/glfw3.h>
+
+#include "Application.hpp"
 
 namespace engine {
 

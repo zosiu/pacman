@@ -1,6 +1,10 @@
-#include "Level.hpp"
-#include "./engine/OpenGL/BatchRenderer2D.hpp"
+#include "pch.hpp"
+
 #include "Constants.hpp"
+
+#include "./engine/OpenGL/BatchRenderer2D.hpp"
+
+#include "Level.hpp"
 
 namespace pacman {
 

@@ -3,19 +3,15 @@
 #ifndef BBD15B48_D134_3B08_114E_60D614CCA16E
 #define BBD15B48_D134_3B08_114E_60D614CCA16E
 
-namespace engine {
-
-constexpr int MINIMUM_OPENGL_MAJOR_VERSION = 4;
-constexpr int MINIMUM_OPENGL_MINOR_VERSION = 0;
-
-} // namespace engine
-
 #ifdef DEBUG
 #define ENABLE_ASSERTS
 #define OPENGL_DEBUG
 #endif
 
 #ifdef ENABLE_ASSERTS
+
+#include "Logger.hpp"
+
 #define ASSERT(x, ...)                                                                                                 \
   {                                                                                                                    \
     if (!(x)) {                                                                                                        \

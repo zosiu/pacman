@@ -1,5 +1,8 @@
-#include "BatchRenderer2D.hpp"
+#include "../../pch.hpp"
+
 #include <glad/glad.h>
+
+#include "BatchRenderer2D.hpp"
 
 namespace engine {
 

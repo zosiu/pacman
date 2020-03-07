@@ -3,9 +3,6 @@
 #ifndef BB63AAA9_A134_3B6F_1606_14707E2957F6
 #define BB63AAA9_A134_3B6F_1606_14707E2957F6
 
-#include "pch.hpp"
-#include <glm/glm.hpp>
-
 namespace pacman {
 
 enum class Tile { Void, Wall, Floor };

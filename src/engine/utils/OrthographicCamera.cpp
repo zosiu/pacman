@@ -1,5 +1,8 @@
-#include "OrthographicCamera.hpp"
+#include "../../pch.hpp"
+
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "OrthographicCamera.hpp"
 
 namespace engine {
 

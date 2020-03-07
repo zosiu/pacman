@@ -1,7 +1,12 @@
-#include "GameLayer.hpp"
+#include "pch.hpp"
+
+#include "Direction.hpp"
+#include "Text.hpp"
+
 #include "engine/OpenGL/BatchRenderer2D.hpp"
 #include <glad/glad.h>
-#include "Text.hpp"
+
+#include "GameLayer.hpp"
 
 namespace pacman {
 

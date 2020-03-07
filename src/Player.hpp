@@ -2,10 +2,9 @@
 #ifndef DB12CA75_E9FF_4514_A818_F4962D72FB13
 #define DB12CA75_E9FF_4514_A818_F4962D72FB13
 
-#include "Movement.hpp"
+#include "Direction.hpp"
 #include "Level.hpp"
-#include "Constants.hpp"
-#include "glm/glm.hpp"
+#include "Movement.hpp"
 
 namespace pacman {
 

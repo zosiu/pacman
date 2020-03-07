@@ -3,7 +3,6 @@
 #ifndef A00B3F40_2134_3B0E_163E_BE8C3F77F490
 #define A00B3F40_2134_3B0E_163E_BE8C3F77F490
 
-#include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 
 namespace engine {

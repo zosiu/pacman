@@ -1,6 +1,8 @@
-#include "engine/core/Application.hpp"
-#include "GameLayer.hpp"
 #include "pch.hpp"
+
+#include "engine/core/Application.hpp"
+
+#include "GameLayer.hpp"
 
 int main() {
   engine::Logger::init("pacman.log");

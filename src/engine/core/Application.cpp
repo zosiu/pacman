@@ -1,5 +1,5 @@
 #include "Application.hpp"
-#include "../OpenGL/OpenGLShaderProgram.hpp"
+#include "../OpenGL/ShaderProgram.hpp"
 #include "../events/KeyEvents.hpp"
 #include <GLFW/glfw3.h>
 
@@ -19,7 +19,7 @@ void Application::attach_layer(Layer *layer) {
 }
 
 void Application::run() {
-  OpenGLShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
+  ShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
 
   last_frame_time = glfwGetTime();
   srand(last_frame_time);
@@ -61,7 +61,7 @@ void Application::on_window_resize(const WindowResizedEvent &event) {
 
   float aspect_ratio = (float)width / (float)height;
   camera->set_projection(-aspect_ratio, aspect_ratio, -1.0f, 1.0f);
-  OpenGLShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
+  ShaderProgram::upload_view_projection_uniform(camera->get_view_projection_matrix());
   glViewport(0, 0, width, height);
 }
 

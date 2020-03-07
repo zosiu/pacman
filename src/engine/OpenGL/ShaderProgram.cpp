@@ -1,11 +1,11 @@
-#include "OpenGLShaderProgram.hpp"
+#include "ShaderProgram.hpp"
 #include "../core/Core.hpp"
 #include "../utils/File.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
 namespace engine {
 
-OpenGLShaderProgram::OpenGLShaderProgram(const char *vertex_shader_filename, const char *fragment_shader_filename) {
+ShaderProgram::ShaderProgram(const char *vertex_shader_filename, const char *fragment_shader_filename) {
   GLuint vertex_shader = compile_shader(GL_VERTEX_SHADER, vertex_shader_filename);
   REFUTE(vertex_shader == 0, "failed to create vertex shader");
 
@@ -44,13 +44,13 @@ OpenGLShaderProgram::OpenGLShaderProgram(const char *vertex_shader_filename, con
   }
 }
 
-OpenGLShaderProgram::~OpenGLShaderProgram() { glDeleteProgram(id); }
+ShaderProgram::~ShaderProgram() { glDeleteProgram(id); }
 
-void OpenGLShaderProgram::bind() const { glUseProgram(id); }
+void ShaderProgram::bind() const { glUseProgram(id); }
 
-void OpenGLShaderProgram::unbind() const { glUseProgram(0); }
+void ShaderProgram::unbind() const { glUseProgram(0); }
 
-void OpenGLShaderProgram::upload_view_projection_uniform(const glm::mat4 &matrix) {
+void ShaderProgram::upload_view_projection_uniform(const glm::mat4 &matrix) {
   GLint current_program;
   glGetIntegerv(GL_CURRENT_PROGRAM, &current_program);
   REFUTE(current_program == 0, "could not find active shader program");
@@ -61,7 +61,7 @@ void OpenGLShaderProgram::upload_view_projection_uniform(const glm::mat4 &matrix
   glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void OpenGLShaderProgram::upload_model_transformation_uniform(const glm::mat4 &matrix) {
+void ShaderProgram::upload_model_transformation_uniform(const glm::mat4 &matrix) {
   GLint current_program;
   glGetIntegerv(GL_CURRENT_PROGRAM, &current_program);
   REFUTE(current_program == 0, "could not find active shader program");
@@ -72,13 +72,13 @@ void OpenGLShaderProgram::upload_model_transformation_uniform(const glm::mat4 &m
   glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void OpenGLShaderProgram::upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix) {
+void ShaderProgram::upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix) {
   GLint uniform_location = glGetUniformLocation(id, name.c_str());
   REFUTE(uniform_location == -1, "could not find uniform {}", name);
   glUniformMatrix4fv(uniform_location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-GLuint OpenGLShaderProgram::compile_shader(GLenum shader_type, const char *source_file) {
+GLuint ShaderProgram::compile_shader(GLenum shader_type, const char *source_file) {
   GLuint shader = glCreateShader(shader_type);
   std::string file_contents = File::contents(source_file);
   const char *shader_source = file_contents.c_str();

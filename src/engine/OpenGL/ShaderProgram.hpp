@@ -7,10 +7,10 @@
 #include <glm/glm.hpp>
 
 namespace engine {
-class OpenGLShaderProgram {
+class ShaderProgram {
 public:
-  OpenGLShaderProgram(const char *vertex_shader_filename, const char *fragment_shader_filename);
-  ~OpenGLShaderProgram();
+  ShaderProgram(const char *vertex_shader_filename, const char *fragment_shader_filename);
+  ~ShaderProgram();
 
   void bind() const;
   void unbind() const;

@@ -1,5 +1,5 @@
 #include "GameLayer.hpp"
-#include "engine/OpenGL/renderer/BatchRenderer2D.hpp"
+#include "engine/OpenGL/BatchRenderer2D.hpp"
 #include <glad/glad.h>
 #include "Text.hpp"
 
@@ -16,6 +16,7 @@ constexpr glm::vec4 COLOR_ORANGE_GHOST = {1.0f, 0.5f, 0.25f, 1.0f};
 constexpr glm::vec4 COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
 
 GameLayer::GameLayer() : Layer() {
+  shader = std::make_unique<engine::ShaderProgram>("shaders/base.vert.glsl", "shaders/base.frag.glsl");
   engine::BatchRenderer2D::init();
 
   ghosts = {
@@ -30,7 +31,6 @@ GameLayer::GameLayer() : Layer() {
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }
 
 void GameLayer::on_attach() {
-  shader = std::make_unique<engine::OpenGLShaderProgram>("shaders/base.vert.glsl", "shaders/base.frag.glsl");
   shader->bind();
 
   const auto [min_tiles, max_tiles] = std::minmax({level_map.number_of_columns(), level_map.number_of_rows()});
@@ -42,7 +42,7 @@ void GameLayer::on_attach() {
                                           {0.0f, 0.0f, 0.0, 0.0f}, //
                                           {-1.0f + x_correction, 1.0f, 0.0, 1.0}});
 
-  engine::OpenGLShaderProgram::upload_model_transformation_uniform(model_transform);
+  engine::ShaderProgram::upload_model_transformation_uniform(model_transform);
 }
 
 void GameLayer::on_update(float time_since_last_update_in_ms) {

@@ -1,5 +1,5 @@
 #include "Player.hpp"
-#include "engine/OpenGL/renderer/BatchRenderer2D.hpp"
+#include "engine/OpenGL/BatchRenderer2D.hpp"
 #include "pch.hpp"
 #include "Constants.hpp"
 

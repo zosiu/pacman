@@ -5,7 +5,7 @@
 
 #include "engine/core/Layer.hpp"
 #include "engine/events/KeyEvents.hpp"
-#include "engine/OpenGL/OpenGLShaderProgram.hpp"
+#include "engine/OpenGL/ShaderProgram.hpp"
 #include "Player.hpp"
 #include "Ghost.hpp"
 #include "Level.hpp"
@@ -29,7 +29,7 @@ private:
   void on_key_pressed(const engine::KeyPressedEvent &event);
 
 private:
-  std::unique_ptr<engine::OpenGLShaderProgram> shader;
+  std::unique_ptr<engine::ShaderProgram> shader;
 
   GameState game_state = GameState::Paused;
   Level level_map;

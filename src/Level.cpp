@@ -12,6 +12,128 @@ constexpr Color COLOR_WALL = {0.0f, 0.0f, 0.4f, 1.0f};
 constexpr Color COLOR_PELLET = {1.0f, 1.0f, 1.0f, 1.0f};
 
 Level::Level() {
+  layout = {{
+      {
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Wall,  Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Wall,  Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Wall,  Tile::Wall,
+      },
+      {
+          Tile::Void, Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
+      },
+      {
+          Tile::Void, Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
+      },
+      {
+          Tile::Void,  Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
+      },
+      {
+          Tile::Void, Tile::Void, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Void, Tile::Void,
+      },
+      {
+          Tile::Void,  Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
+      },
+      {
+          Tile::Void, Tile::Void, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Void, Tile::Void,
+      },
+      {
+          Tile::Void, Tile::Void,  Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Void,  Tile::Void,
+      },
+      {
+          Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall,  Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Wall,  Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Wall,  Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Floor,
+          Tile::Wall, Tile::Floor, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall, Tile::Floor, Tile::Wall,  Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Wall,  Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall,  Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor,
+          Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Floor, Tile::Wall,
+      },
+      {
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
+      },
+      //    {
+      //        Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void,
+      //        Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void,
+      //        Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void, Tile::Void,
+      //    }
+  }};
   for (size_t y = 0; y < number_of_rows(); ++y) {
     for (size_t x = 0; x < number_of_columns(); ++x) {
       if (layout[y][x] == Tile::Floor)
@@ -19,6 +141,16 @@ Level::Level() {
     }
   }
 }
+
+TileCoord Level::north_west_corner_floor() const { return TileCoord{1, 1}; }
+
+TileCoord Level::north_east_corner_floor() const { return TileCoord{21, 1}; }
+
+TileCoord Level::south_west_corner_floor() const { return TileCoord{1, 21}; }
+
+TileCoord Level::south_east_corner_floor() const { return TileCoord{21, 21}; }
+
+TileCoord Level::center_floor() const { return TileCoord{11, 13}; }
 
 size_t Level::number_of_rows() const { return layout.size(); }
 

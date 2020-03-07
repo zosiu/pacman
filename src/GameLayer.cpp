@@ -25,12 +25,12 @@ GameLayer::GameLayer() : Layer() {
   engine::BatchRenderer2D::init();
 
   ghosts = {
-      Ghost(COLOR_RED_GHOST, {1, 1}, Direction::Right, GHOST_MS_PER_TILE, &level_map),
-      Ghost(COLOR_PINK_GHOST, {1, 21}, Direction::Up, GHOST_MS_PER_TILE, &level_map),
-      Ghost(COLOR_CYAN_GHOST, {21, 1}, Direction::Down, GHOST_MS_PER_TILE, &level_map),
-      Ghost(COLOR_ORANGE_GHOST, {21, 21}, Direction::Left, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_RED_GHOST, level_map.north_west_corner_floor(), Direction::Right, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_PINK_GHOST, level_map.south_west_corner_floor(), Direction::Up, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_CYAN_GHOST, level_map.north_east_corner_floor(), Direction::Down, GHOST_MS_PER_TILE, &level_map),
+      Ghost(COLOR_ORANGE_GHOST, level_map.south_east_corner_floor(), Direction::Left, GHOST_MS_PER_TILE, &level_map),
   };
-  player = std::make_unique<Player>(Coord({11, 13}), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
+  player = std::make_unique<Player>(level_map.center_floor(), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
 }
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }
@@ -84,13 +84,14 @@ void GameLayer::render() const {
   level_map.render();
 
   player->render();
+
   for (auto &ghost : ghosts)
     ghost.render();
 
   if (game_state == GameState::Lost)
-    Text::render_you_lose({10, 10.5});
+    Text::render_you_lose({level_map.center_floor().x - 1, level_map.center_floor().y - 2.5});
   if (game_state == GameState::Won)
-    Text::render_you_win({10, 10.5});
+    Text::render_you_win({level_map.center_floor().x - 1, level_map.center_floor().y - 2.5});
 
   engine::BatchRenderer2D::end_batch();
   engine::BatchRenderer2D::flush();

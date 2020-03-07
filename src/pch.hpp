@@ -22,4 +22,6 @@
 
 #include "engine/utils/Logger.hpp"
 
+#include "Aliases.hpp"
+
 #endif /* BE8B66C2_E134_3B08_37C5_D8F8F0AA75DF */

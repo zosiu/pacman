@@ -8,9 +8,9 @@
 
 namespace pacman {
 
-constexpr glm::vec4 COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
+constexpr Color COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
 
-Player::Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level)
+Player::Player(Coord starting_position, Direction starting_direction, float speed, Level *level)
     : level_map(level), movement(starting_position, starting_direction, speed, level) {}
 
 void Player::update() {
@@ -46,11 +46,11 @@ void Player::render_mouth() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  glm::vec2 mouth_starting_pos;
-  glm::vec2 lip1_starting_pos;
-  glm::vec2 lip2_starting_pos;
-  glm::vec2 mouth_size;
-  const glm::vec2 lip_size = {1 / 9.0, 1 / 9.0};
+  Coord mouth_starting_pos;
+  Coord lip1_starting_pos;
+  Coord lip2_starting_pos;
+  Coord mouth_size;
+  const Coord lip_size = {1 / 9.0, 1 / 9.0};
 
   switch (movement.get_direction()) {
   case Direction::None:
@@ -88,7 +88,6 @@ void Player::render_mouth() const {
 
 void Player::request_direction(Direction direction) { movement.request_direction(direction); }
 
-const glm::vec2 &Player::get_position() const { return movement.get_position(); }
-glm::vec<2, int> Player::get_tile() const { return movement.get_tile(); }
+const Coord &Player::get_position() const { return movement.get_position(); }
 
 } // namespace pacman

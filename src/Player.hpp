@@ -10,11 +10,10 @@ namespace pacman {
 
 class Player {
 public:
-  Player(glm::vec2 starting_position, Direction starting_direction, float speed, Level *level);
+  Player(Coord starting_position, Direction starting_direction, float speed, Level *level);
 
   void request_direction(Direction direction);
-  const glm::vec2 &get_position() const;
-  glm::vec<2, int> get_tile() const;
+  const Coord &get_position() const;
 
   void update();
   void render() const;
@@ -24,7 +23,7 @@ private:
   void render_mouth() const;
 
 private:
-  glm::vec4 color = {1.0f, 1.0f, 0.0f, 1.0f};
+  Color color = {1.0f, 1.0f, 0.0f, 1.0f};
   Level *level_map;
   Movement movement;
 };

@@ -11,9 +11,9 @@ namespace pacman {
 class Ghost {
 
 public:
-  Ghost(glm::vec4 color, glm::vec2 starting_position, Direction starting_direction, float speed, const Level *level);
+  Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level);
 
-  const glm::vec2 &get_position() const;
+  const Coord &get_position() const;
 
   void update();
   void render() const;
@@ -24,7 +24,7 @@ private:
   void render_eye_whites() const;
 
 private:
-  glm::vec4 color;
+  Color color;
   Movement movement;
 };
 

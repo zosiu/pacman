@@ -6,14 +6,13 @@
 
 namespace pacman {
 
-constexpr glm::vec4 COLOR_GHOST_EYE = {1.0f, 1.0f, 1.0f, 1.0f};
-constexpr glm::vec4 COLOR_GHOST_PUPIL = {0.0f, 0.0f, 0.4f, 1.0f};
+constexpr Color COLOR_GHOST_EYE = {1.0f, 1.0f, 1.0f, 1.0f};
+constexpr Color COLOR_GHOST_PUPIL = {0.0f, 0.0f, 0.4f, 1.0f};
 
-Ghost::Ghost(glm::vec4 color, glm::vec2 starting_position, Direction starting_direction, float speed,
-             const Level *level)
+Ghost::Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level)
     : color(std::move(color)), movement(starting_position, starting_direction, speed, level) {}
 
-const glm::vec2 &Ghost::get_position() const { return movement.get_position(); }
+const Coord &Ghost::get_position() const { return movement.get_position(); }
 
 void Ghost::update() {
   movement.move();
@@ -54,7 +53,7 @@ void Ghost::render_body() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  const glm::vec4 COLOR_FLOOR = {0.0f, 0.0f, 0.0f, 1.0f};
+  const Color COLOR_FLOOR = {0.0f, 0.0f, 0.0f, 1.0f};
 
   engine::BatchRenderer2D::draw_quad({pos_x, pos_y}, {1, 1}, color);
 
@@ -73,7 +72,7 @@ void Ghost::render_pupils() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  glm::vec2 starting_pos;
+  Coord starting_pos;
   switch (movement.get_direction()) {
   case Direction::None:
     return;
@@ -91,7 +90,7 @@ void Ghost::render_pupils() const {
     break;
   }
 
-  const glm::vec2 pupil_size = {1 / 9.0, 2 / 9.0};
+  const Coord pupil_size = {1 / 9.0, 2 / 9.0};
   engine::BatchRenderer2D::draw_quad({starting_pos.x, starting_pos.y}, pupil_size, COLOR_GHOST_PUPIL);
   engine::BatchRenderer2D::draw_quad({starting_pos.x + 4 / 9.0, starting_pos.y}, pupil_size, COLOR_GHOST_PUPIL);
 }
@@ -100,7 +99,7 @@ void Ghost::render_eye_whites() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  glm::vec2 starting_pos;
+  Coord starting_pos;
   switch (movement.get_direction()) {
   case Direction::None:
     return;
@@ -118,7 +117,7 @@ void Ghost::render_eye_whites() const {
     break;
   }
 
-  const glm::vec2 eye_white_size = {3 / 9.0, 3 / 9.0};
+  const Coord eye_white_size = {3 / 9.0, 3 / 9.0};
   engine::BatchRenderer2D::draw_quad({starting_pos.x, starting_pos.y}, eye_white_size, COLOR_GHOST_EYE);
   engine::BatchRenderer2D::draw_quad({starting_pos.x + 4 / 9.0, starting_pos.y}, eye_white_size, COLOR_GHOST_EYE);
 }

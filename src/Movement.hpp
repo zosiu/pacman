@@ -10,10 +10,10 @@ namespace pacman {
 
 class Movement {
 public:
-  Movement(glm::vec2 starting_position, Direction starting_direction, float ms_per_tile, const Level *level);
+  Movement(Coord starting_position, Direction starting_direction, float ms_per_tile, const Level *level);
 
-  const glm::vec2 &get_position() const;
-  glm::vec<2, int> get_tile() const;
+  const Coord &get_position() const;
+  TileCoord get_tile() const;
   Direction get_direction() const;
   Direction get_requested_direction() const;
 
@@ -21,12 +21,12 @@ public:
   void request_direction(Direction direction);
 
 private:
-  glm::vec2 position;
+  Coord position;
   Direction direction;
-  float speed;
-  Direction requested_direction = Direction::None;
-
+  float ms_per_tile;
   const Level *level;
+
+  Direction requested_direction = Direction::None;
 };
 
 } // namespace pacman

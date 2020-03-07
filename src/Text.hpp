@@ -6,19 +6,19 @@ namespace pacman {
 
 class Text {
 public:
-  static void render_you_win(const glm::vec2 &position);
-  static void render_you_lose(const glm::vec2 &position);
+  static void render_you_win(const Coord &position);
+  static void render_you_lose(const Coord &position);
 
 private:
-  static void render_y(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_o(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_u(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_w(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_i(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_n(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_l(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_s(const glm::vec2 &position, const glm::vec4 &color);
-  static void render_e(const glm::vec2 &position, const glm::vec4 &color);
+  static void render_y(const Coord &position, const Color &color);
+  static void render_o(const Coord &position, const Color &color);
+  static void render_u(const Coord &position, const Color &color);
+  static void render_w(const Coord &position, const Color &color);
+  static void render_i(const Coord &position, const Color &color);
+  static void render_n(const Coord &position, const Color &color);
+  static void render_l(const Coord &position, const Color &color);
+  static void render_s(const Coord &position, const Color &color);
+  static void render_e(const Coord &position, const Color &color);
 };
 
 } // namespace pacman

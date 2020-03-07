@@ -13,12 +13,12 @@ namespace pacman {
 constexpr float PLAYER_MS_PER_TILE = 215.0f;
 constexpr float GHOST_MS_PER_TILE = 190.0f;
 
-constexpr glm::vec4 COLOR_RED_GHOST = {1.0f, 0.0f, 0.0f, 1.0f};
-constexpr glm::vec4 COLOR_PINK_GHOST = {1.0f, 0.5f, 1.0f, 1.0f};
-constexpr glm::vec4 COLOR_CYAN_GHOST = {0.0f, 1.0f, 1.0f, 1.0f};
-constexpr glm::vec4 COLOR_ORANGE_GHOST = {1.0f, 0.5f, 0.25f, 1.0f};
+constexpr Color COLOR_RED_GHOST = {1.0f, 0.0f, 0.0f, 1.0f};
+constexpr Color COLOR_PINK_GHOST = {1.0f, 0.5f, 1.0f, 1.0f};
+constexpr Color COLOR_CYAN_GHOST = {0.0f, 1.0f, 1.0f, 1.0f};
+constexpr Color COLOR_ORANGE_GHOST = {1.0f, 0.5f, 0.25f, 1.0f};
 
-constexpr glm::vec4 COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
+constexpr Color COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
 
 GameLayer::GameLayer() : Layer() {
   shader = std::make_unique<engine::ShaderProgram>("shaders/base.vert.glsl", "shaders/base.frag.glsl");
@@ -30,7 +30,7 @@ GameLayer::GameLayer() : Layer() {
       Ghost(COLOR_CYAN_GHOST, {21, 1}, Direction::Down, GHOST_MS_PER_TILE, &level_map),
       Ghost(COLOR_ORANGE_GHOST, {21, 21}, Direction::Left, GHOST_MS_PER_TILE, &level_map),
   };
-  player = std::make_unique<Player>(glm::vec2({11, 13}), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
+  player = std::make_unique<Player>(Coord({11, 13}), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
 }
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }

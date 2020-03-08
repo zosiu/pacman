@@ -72,7 +72,7 @@ void Ghost::render_pupils() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  Coord starting_pos;
+  Coord starting_pos = {pos_x, pos_y};
   switch (movement.get_direction()) {
   case Direction::None:
     return;
@@ -99,7 +99,7 @@ void Ghost::render_eye_whites() const {
   auto pos_x = movement.get_position().x;
   auto pos_y = movement.get_position().y;
 
-  Coord starting_pos;
+  Coord starting_pos = {pos_x, pos_y};
   switch (movement.get_direction()) {
   case Direction::None:
     return;

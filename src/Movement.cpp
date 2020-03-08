@@ -35,7 +35,7 @@ void Movement::move() {
     requested_direction = Direction::None;
   }
 
-  glm::vec<2, int> dir;
+  glm::vec<2, int> dir = {0, 0};
   switch (direction) {
   case Direction::None:
     dir = {0, 0};

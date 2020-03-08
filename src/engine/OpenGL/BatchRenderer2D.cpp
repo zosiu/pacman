@@ -36,7 +36,7 @@ void BatchRenderer2D::init() {
 
   glGenBuffers(1, &data.quad_vertex_buffer);
   glBindBuffer(GL_ARRAY_BUFFER, data.quad_vertex_buffer);
-  glBufferData(GL_ARRAY_BUFFER, max_vertex_count * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, max_vertex_count * sizeof(Vertex), nullptr, GL_STREAM_DRAW);
 
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void *)offsetof(Vertex, position));
   glEnableVertexAttribArray(0);

@@ -16,30 +16,13 @@ const Coord &Ghost::get_position() const { return movement.get_position(); }
 
 void Ghost::update() {
   movement.move();
+  choose_a_random_direction_forward();
+}
 
-  std::array<Direction, 4> directions = {Direction::Up, Direction::Down, Direction::Left, Direction::Right};
-  Direction opposite = Direction::None;
-  switch (movement.get_direction()) {
-  case Direction::Up:
-    opposite = Direction::Down;
-    break;
-  case Direction::Down:
-    opposite = Direction::Up;
-    break;
-  case Direction::Left:
-    opposite = Direction::Right;
-    break;
-  case Direction::Right:
-    opposite = Direction::Left;
-    break;
-  case Direction::None:
-    break;
-  }
-
-  std::remove(directions.begin(), directions.end(), opposite);
-
+void Ghost::choose_a_random_direction_forward() {
+  auto directions_without_turning_back = directions_exluding(opposite_of(movement.get_direction()));
   if (movement.get_requested_direction() == Direction::None) {
-    movement.request_direction(directions[rand() % 3]);
+    movement.request_direction(directions_without_turning_back[rand() % directions_without_turning_back.size()]);
   }
 }
 

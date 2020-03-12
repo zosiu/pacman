@@ -19,6 +19,7 @@ public:
   void render() const;
 
 private:
+  void choose_a_random_direction_forward();
   void render_body() const;
   void render_pupils() const;
   void render_eye_whites() const;

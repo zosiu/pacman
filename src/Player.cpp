@@ -11,7 +11,7 @@ namespace pacman {
 constexpr Color COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
 
 Player::Player(Coord starting_position, Direction starting_direction, float speed, Level *level)
-    : level_map(level), movement(starting_position, starting_direction, speed, level) {}
+    : Agent(starting_position, starting_direction, speed, level), level_map(level) {}
 
 void Player::update() {
   movement.move();
@@ -87,7 +87,5 @@ void Player::render_mouth() const {
 }
 
 void Player::request_direction(Direction direction) { movement.request_direction(direction); }
-
-const Coord &Player::get_position() const { return movement.get_position(); }
 
 } // namespace pacman

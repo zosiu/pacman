@@ -3,20 +3,19 @@
 #ifndef G280C0FF_2134_3B70_DE3E_712C7D9F7AC9
 #define G280C0FF_2134_3B70_DE3E_712C7D9F7AC9
 
+#include "Agent.hpp"
 #include "Direction.hpp"
 #include "Movement.hpp"
 
 namespace pacman {
 
-class Ghost {
+class Ghost : public Agent {
 
 public:
   Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level);
 
-  const Coord &get_position() const;
-
-  void update();
-  void render() const;
+  void update() override;
+  void render() const override;
 
 private:
   void choose_a_random_direction_forward();
@@ -26,7 +25,6 @@ private:
 
 private:
   Color color;
-  Movement movement;
 };
 
 } // namespace pacman

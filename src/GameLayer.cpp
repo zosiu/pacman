@@ -56,9 +56,8 @@ void GameLayer::on_update(float time_since_last_update_in_ms) {
 }
 
 void GameLayer::update(float time_since_last_update_in_ms) {
-  if (std::any_of(ghosts.begin(), ghosts.end(), [this](const Ghost &ghost) {
-        return glm::distance(ghost.get_position(), this->player->get_position()) < 0.9f;
-      })) {
+  if (std::any_of(ghosts.begin(), ghosts.end(),
+                  [this](const Ghost &ghost) { return this->player->collides_with(ghost); })) {
     game_state = GameState::Lost;
   };
 

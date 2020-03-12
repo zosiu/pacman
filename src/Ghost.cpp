@@ -10,9 +10,7 @@ constexpr Color COLOR_GHOST_EYE = {1.0f, 1.0f, 1.0f, 1.0f};
 constexpr Color COLOR_GHOST_PUPIL = {0.0f, 0.0f, 0.4f, 1.0f};
 
 Ghost::Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level)
-    : color(std::move(color)), movement(starting_position, starting_direction, speed, level) {}
-
-const Coord &Ghost::get_position() const { return movement.get_position(); }
+    : Agent(starting_position, starting_direction, speed, level), color(std::move(color)) {}
 
 void Ghost::update() {
   movement.move();

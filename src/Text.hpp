@@ -11,17 +11,17 @@ public:
   static void render_press_p(const Coord &position);
 
 private:
-  static void render_y(const Coord &position, const Color &color);
-  static void render_o(const Coord &position, const Color &color);
-  static void render_u(const Coord &position, const Color &color);
-  static void render_w(const Coord &position, const Color &color);
-  static void render_i(const Coord &position, const Color &color);
-  static void render_n(const Coord &position, const Color &color);
-  static void render_l(const Coord &position, const Color &color);
-  static void render_s(const Coord &position, const Color &color);
-  static void render_e(const Coord &position, const Color &color);
-  static void render_p(const Coord &position, const Color &color);
-  static void render_r(const Coord &position, const Color &color);
+  static inline void render_y(const Coord &position, const Color &color);
+  static inline void render_o(const Coord &position, const Color &color);
+  static inline void render_u(const Coord &position, const Color &color);
+  static inline void render_w(const Coord &position, const Color &color);
+  static inline void render_i(const Coord &position, const Color &color);
+  static inline void render_n(const Coord &position, const Color &color);
+  static inline void render_l(const Coord &position, const Color &color);
+  static inline void render_s(const Coord &position, const Color &color);
+  static inline void render_e(const Coord &position, const Color &color);
+  static inline void render_p(const Coord &position, const Color &color);
+  static inline void render_r(const Coord &position, const Color &color);
 };
 
 } // namespace pacman

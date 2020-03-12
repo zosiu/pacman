@@ -19,7 +19,7 @@ public:
   void upload_mat4_unifom(const std::string &name, const glm::mat4 &matrix);
 
 private:
-  GLuint compile_shader(GLenum shader_type, const char *source_file);
+  inline GLuint compile_shader(GLenum shader_type, const char *source_file);
 
 private:
   GLuint id = 0;

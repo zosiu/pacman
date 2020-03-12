@@ -21,17 +21,17 @@ public:
   void request_direction(Direction direction);
 
 private:
-  TileCoord current_tile() const;
-  TileCoord next_tile() const;
-  bool can_take_requested_direction() const;
-  bool is_on_tile_x_edge() const;
-  bool is_on_tile_y_edge() const;
-  bool is_on_tile_edge() const;
-  bool can_go_up() const;
-  bool can_go_down() const;
-  bool can_go_left() const;
-  bool can_go_right() const;
-  bool is_blocked() const;
+  inline TileCoord current_tile() const;
+  inline TileCoord next_tile() const;
+  inline bool can_take_requested_direction() const;
+  inline bool is_on_tile_x_edge() const;
+  inline bool is_on_tile_y_edge() const;
+  inline bool is_on_tile_edge() const;
+  inline bool can_go_up() const;
+  inline bool can_go_down() const;
+  inline bool can_go_left() const;
+  inline bool can_go_right() const;
+  inline bool is_blocked() const;
 
 private:
   Coord position;

@@ -18,10 +18,10 @@ public:
   void render() const override;
 
 private:
-  void choose_a_random_direction_forward();
-  void render_body() const;
-  void render_pupils() const;
-  void render_eye_whites() const;
+  inline void choose_a_random_direction_forward();
+  inline void render_body() const;
+  inline void render_pupils() const;
+  inline void render_eye_whites() const;
 
 private:
   Color color;

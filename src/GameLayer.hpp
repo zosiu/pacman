@@ -20,14 +20,18 @@ class GameLayer : public engine::Layer {
 public:
   GameLayer();
   ~GameLayer() override;
+  GameLayer(const GameLayer &) = delete;
+  GameLayer(GameLayer &&) = delete;
+  GameLayer &operator=(const GameLayer &) = delete;
+  GameLayer &operator=(GameLayer &&) = delete;
 
   void on_attach() override;
   void on_update(float time_since_last_update_in_ms) override;
   void on_event(const engine::Event &event) override;
 
 private:
-  void update(float time_since_last_update_in_ms);
-  void render() const;
+  inline void update(float time_since_last_update_in_ms);
+  inline void render() const;
   void on_key_pressed(const engine::KeyPressedEvent &event);
 
 private:

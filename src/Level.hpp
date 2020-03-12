@@ -7,7 +7,7 @@ namespace pacman {
 
 enum class Tile { Void, Wall, Floor };
 
-struct Vec2KeyFunc {
+struct TileCoord2KeyFunc {
   size_t operator()(const TileCoord &k) const { return std::hash<int>()(k.x) ^ std::hash<int>()(k.y); }
   bool operator()(const TileCoord &a, const TileCoord &b) const { return a.x == b.x && a.y == b.y; }
 };
@@ -34,7 +34,7 @@ public:
 
 private:
   std::array<std::array<Tile, 23>, 23> layout;
-  std::unordered_set<TileCoord, Vec2KeyFunc, Vec2KeyFunc> pellets;
+  std::unordered_set<TileCoord, TileCoord2KeyFunc, TileCoord2KeyFunc> pellets;
 };
 
 } // namespace pacman

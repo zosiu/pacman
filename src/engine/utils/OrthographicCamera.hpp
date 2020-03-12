@@ -12,7 +12,7 @@ public:
   void set_projection(float left, float right, float bottom, float top);
 
   const glm::vec3 &get_position() const;
-  void set_position(const glm::vec3 &new_position);
+  void set_position(glm::vec3 new_position);
 
   float get_rotation() const;
   void set_rotation(float new_rotation);

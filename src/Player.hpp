@@ -19,8 +19,8 @@ public:
   void render() const override;
 
 private:
-  void render_body() const;
-  void render_mouth() const;
+  inline void render_body() const;
+  inline void render_mouth() const;
 
 private:
   Level *level_map;

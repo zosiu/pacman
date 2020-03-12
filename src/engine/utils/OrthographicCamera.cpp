@@ -18,8 +18,8 @@ void OrthographicCamera::set_projection(float left, float right, float bottom, f
 
 const glm::vec3 &OrthographicCamera::get_position() const { return position; }
 
-void OrthographicCamera::set_position(const glm::vec3 &new_position) {
-  position = new_position;
+void OrthographicCamera::set_position(glm::vec3 new_position) {
+  position = std::move(new_position);
   recalculate_matrices();
 }
 

@@ -19,6 +19,7 @@ public:
   void render() const override;
 
 private:
+  bool can_move_into(Tile tile) const;
   inline void render_body() const;
   inline void render_mouth() const;
 

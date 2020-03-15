@@ -4,11 +4,11 @@
 
 namespace pacman {
 
-constexpr Tile PASSABLE_TILE = Tile::Floor;
-
 Movement::Movement(Coord starting_position, Direction starting_direction, float ms_per_tile, const Level *level)
     : starting_position(std::move(starting_position)), starting_direction(starting_direction),
       position(starting_position), direction(starting_direction), ms_per_tile(ms_per_tile), level(level) {}
+
+void Movement::set_can_move_into_predicate(const CanMoveIntoPredicate &predicate) { can_move_into = predicate; }
 
 const Coord &Movement::get_position() const { return position; }
 
@@ -60,22 +60,22 @@ bool Movement::is_on_tile_edge() const {
 }
 
 bool Movement::can_go_up() const {
-  return is_on_tile_x_edge() && (level->at(current_tile() + direction_to_vec(Direction::Up)) == PASSABLE_TILE);
+  return is_on_tile_x_edge() && can_move_into(level->at(current_tile() + direction_to_vec(Direction::Up)));
 }
 
 bool Movement::can_go_down() const {
-  return is_on_tile_x_edge() && (level->at(current_tile() + direction_to_vec(Direction::Down)) == PASSABLE_TILE);
+  return is_on_tile_x_edge() && can_move_into(level->at(current_tile() + direction_to_vec(Direction::Down)));
 }
 
 bool Movement::can_go_left() const {
-  return is_on_tile_y_edge() && (level->at(current_tile() + direction_to_vec(Direction::Left)) == PASSABLE_TILE);
+  return is_on_tile_y_edge() && can_move_into(level->at(current_tile() + direction_to_vec(Direction::Left)));
 }
 
 bool Movement::can_go_right() const {
-  return is_on_tile_y_edge() && (level->at(current_tile() + direction_to_vec(Direction::Right)) == PASSABLE_TILE);
+  return is_on_tile_y_edge() && can_move_into(level->at(current_tile() + direction_to_vec(Direction::Right)));
 }
 
-bool Movement::is_blocked() const { return is_on_tile_edge() && (level->at(next_tile()) != PASSABLE_TILE); }
+bool Movement::is_blocked() const { return is_on_tile_edge() && !can_move_into(level->at(next_tile())); }
 
 bool Movement::can_take_requested_direction() const {
   return (requested_direction == Direction::Right && can_go_right()) ||

@@ -10,6 +10,8 @@ namespace pacman {
 
 class Movement {
 public:
+  using CanMoveIntoPredicate = std::function<bool(Tile)>;
+
   Movement(Coord starting_position, Direction starting_direction, float ms_per_tile, const Level *level);
 
   const Coord &get_position() const;
@@ -20,6 +22,7 @@ public:
   void reset();
   void move();
   void request_direction(Direction direction);
+  void set_can_move_into_predicate(const CanMoveIntoPredicate &predicate);
 
 private:
   inline TileCoord current_tile() const;
@@ -41,6 +44,7 @@ private:
   Direction direction;
   float ms_per_tile;
   const Level *level;
+  CanMoveIntoPredicate can_move_into;
 
   Direction requested_direction = Direction::None;
 };

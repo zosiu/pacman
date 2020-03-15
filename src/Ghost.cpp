@@ -10,7 +10,12 @@ constexpr Color COLOR_GHOST_EYE = {1.0f, 1.0f, 1.0f, 1.0f};
 constexpr Color COLOR_GHOST_PUPIL = {0.0f, 0.0f, 0.4f, 1.0f};
 
 Ghost::Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level)
-    : Agent(starting_position, starting_direction, speed, level), color(std::move(color)) {}
+    : Agent(starting_position, starting_direction, speed, level), color(std::move(color)) {
+
+  movement.set_can_move_into_predicate(std::bind(&Ghost::can_move_into, this, std::placeholders::_1));
+}
+
+bool Ghost::can_move_into(Tile tile) const { return tile == Tile::Floor; }
 
 void Ghost::update() {
   movement.move();

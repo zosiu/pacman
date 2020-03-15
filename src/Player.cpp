@@ -11,7 +11,11 @@ namespace pacman {
 constexpr Color COLOR_PLAYER = {1.0f, 1.0f, 0.0f, 1.0f};
 
 Player::Player(Coord starting_position, Direction starting_direction, float speed, Level *level)
-    : Agent(starting_position, starting_direction, speed, level), level_map(level) {}
+    : Agent(starting_position, starting_direction, speed, level), level_map(level) {
+  movement.set_can_move_into_predicate(std::bind(&Player::can_move_into, this, std::placeholders::_1));
+}
+
+bool Player::can_move_into(Tile tile) const { return tile == Tile::Floor; }
 
 void Player::update() {
   movement.move();

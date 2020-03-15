@@ -1,11 +1,15 @@
 #include "pch.hpp"
 
+#include "Level.hpp"
+
 #include "Agent.hpp"
 
 namespace pacman {
 
 Agent::Agent(Coord starting_position, Direction starting_direction, float speed, const Level *level)
-    : movement(starting_position, starting_direction, speed, level) {}
+    : movement(starting_position, starting_direction, speed, level) {
+  movement.set_can_move_into_predicate([](Tile) { return false; });
+}
 
 void Agent::reset() { movement.reset(); }
 

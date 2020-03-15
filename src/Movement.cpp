@@ -7,7 +7,8 @@ namespace pacman {
 constexpr Tile PASSABLE_TILE = Tile::Floor;
 
 Movement::Movement(Coord starting_position, Direction starting_direction, float ms_per_tile, const Level *level)
-    : position(std::move(starting_position)), direction(starting_direction), ms_per_tile(ms_per_tile), level(level) {}
+    : starting_position(std::move(starting_position)), starting_direction(starting_direction),
+      position(starting_position), direction(starting_direction), ms_per_tile(ms_per_tile), level(level) {}
 
 const Coord &Movement::get_position() const { return position; }
 
@@ -18,6 +19,11 @@ Direction Movement::get_direction() const { return direction; }
 Direction Movement::get_requested_direction() const { return requested_direction; }
 
 void Movement::request_direction(Direction direction) { requested_direction = direction; }
+
+void Movement::reset() {
+  position = starting_position;
+  direction = starting_direction;
+}
 
 void Movement::move() {
   if (can_take_requested_direction()) {

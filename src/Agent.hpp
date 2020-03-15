@@ -13,7 +13,8 @@ public:
   Agent(Coord starting_position, Direction starting_direction, float speed, const Level *level);
   virtual ~Agent() = default;
 
-  bool collides_with(const Agent &other_agent) const;
+  virtual bool collides_with(const Agent &other_agent) const;
+  virtual void reset();
 
   virtual void update() = 0;
   virtual void render() const = 0;

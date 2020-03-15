@@ -17,6 +17,7 @@ public:
   Direction get_direction() const;
   Direction get_requested_direction() const;
 
+  void reset();
   void move();
   void request_direction(Direction direction);
 
@@ -34,6 +35,8 @@ private:
   inline bool is_blocked() const;
 
 private:
+  Coord starting_position;
+  Direction starting_direction;
   Coord position;
   Direction direction;
   float ms_per_tile;

@@ -127,6 +127,10 @@ Level::Level() {
                  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
                  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
              }}};
+  populate_pellets();
+}
+
+void Level::populate_pellets() {
   for (size_t y = 0; y < number_of_rows(); ++y) {
     for (size_t x = 0; x < number_of_columns(); ++x) {
       if (layout[y][x] == Tile::Floor)
@@ -134,6 +138,8 @@ Level::Level() {
     }
   }
 }
+
+void Level::reset() { populate_pellets(); }
 
 TileCoord Level::north_west_corner_floor() const { return TileCoord{1, 1}; }
 

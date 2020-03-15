@@ -30,6 +30,7 @@ public:
   void on_event(const engine::Event &event) override;
 
 private:
+  inline void reset();
   inline void update(float time_since_last_update_in_ms);
   inline void render() const;
   void on_key_pressed(const engine::KeyPressedEvent &event);

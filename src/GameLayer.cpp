@@ -53,6 +53,15 @@ void GameLayer::on_attach() {
   engine::ShaderProgram::upload_model_transformation_uniform(model_transform);
 }
 
+void GameLayer::reset() {
+  level_map.reset();
+  player->reset();
+  for (auto &ghost : ghosts)
+    ghost.reset();
+
+  game_state = GameState::Paused;
+}
+
 void GameLayer::on_update(float time_since_last_update_in_ms) {
   render();
   update(time_since_last_update_in_ms);
@@ -121,8 +130,8 @@ void GameLayer::on_key_pressed(const engine::KeyPressedEvent &key_press_event) {
   if (key_press_event.get_key_code() == engine::KeyCode::P) {
     switch (game_state) {
     case GameState::Lost:
-      break;
     case GameState::Won:
+      reset();
       break;
     case GameState::Paused:
       game_state = GameState::InProgress;

@@ -30,7 +30,11 @@ public:
   bool no_more_pellets() const;
   void erase_pellet(const TileCoord &tile);
 
+  void reset();
   void render() const;
+
+private:
+  inline void populate_pellets();
 
 private:
   std::array<std::array<Tile, 23>, 23> layout;

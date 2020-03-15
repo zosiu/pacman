@@ -15,8 +15,8 @@ public:
 
   virtual bool collides_with(const Agent &other_agent) const;
   virtual void reset();
+  virtual void update();
 
-  virtual void update() = 0;
   virtual void render() const = 0;
 
 protected:

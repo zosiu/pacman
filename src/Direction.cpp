@@ -19,21 +19,6 @@ Direction opposite_of(Direction direction) {
   }
 }
 
-std::array<Direction, 3> directions_exluding(Direction direction) {
-  switch (direction) {
-  case Direction::None:
-    return {Direction::None, Direction::None, Direction::None};
-  case Direction::Up:
-    return {Direction::Down, Direction::Left, Direction::Right};
-  case Direction::Down:
-    return {Direction::Up, Direction::Left, Direction::Right};
-  case Direction::Left:
-    return {Direction::Right, Direction::Up, Direction::Down};
-  case Direction::Right:
-    return {Direction::Left, Direction::Up, Direction::Down};
-  }
-}
-
 glm::vec<2, int> direction_to_vec(Direction direction) {
   switch (direction) {
   case Direction::None:

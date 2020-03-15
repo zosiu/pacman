@@ -15,16 +15,18 @@ public:
 
   void request_direction(Direction direction);
 
-  void update() override;
   void render() const override;
 
 private:
   bool can_move_into(Tile tile) const;
+  Direction next_direction(const DirectionInfo &info) const;
+  void after_move(const MoveInfo &info);
   inline void render_body() const;
   inline void render_mouth() const;
 
 private:
   Level *level_map;
+  Direction requested_direction = Direction::None;
 };
 
 } // namespace pacman

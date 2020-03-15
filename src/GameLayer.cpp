@@ -111,20 +111,22 @@ void GameLayer::render() const {
 }
 
 void GameLayer::on_key_pressed(const engine::KeyPressedEvent &key_press_event) {
-  if (key_press_event.get_key_code() == engine::KeyCode::Left || key_press_event.get_key_code() == engine::Key::A) {
-    player->request_direction(Direction::Left);
-  }
+  if (game_state == GameState::InProgress) {
+    if (key_press_event.get_key_code() == engine::KeyCode::Left || key_press_event.get_key_code() == engine::Key::A) {
+      player->request_direction(Direction::Left);
+    }
 
-  if (key_press_event.get_key_code() == engine::KeyCode::Right || key_press_event.get_key_code() == engine::Key::D) {
-    player->request_direction(Direction::Right);
-  }
+    if (key_press_event.get_key_code() == engine::KeyCode::Right || key_press_event.get_key_code() == engine::Key::D) {
+      player->request_direction(Direction::Right);
+    }
 
-  if (key_press_event.get_key_code() == engine::KeyCode::Up || key_press_event.get_key_code() == engine::Key::W) {
-    player->request_direction(Direction::Up);
-  }
+    if (key_press_event.get_key_code() == engine::KeyCode::Up || key_press_event.get_key_code() == engine::Key::W) {
+      player->request_direction(Direction::Up);
+    }
 
-  if (key_press_event.get_key_code() == engine::KeyCode::Down || key_press_event.get_key_code() == engine::Key::S) {
-    player->request_direction(Direction::Down);
+    if (key_press_event.get_key_code() == engine::KeyCode::Down || key_press_event.get_key_code() == engine::Key::S) {
+      player->request_direction(Direction::Down);
+    }
   }
 
   if (key_press_event.get_key_code() == engine::KeyCode::P) {

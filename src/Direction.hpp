@@ -9,8 +9,6 @@ enum class Direction { None, Up, Down, Left, Right };
 
 Direction opposite_of(Direction direction);
 
-std::array<Direction, 3> directions_exluding(Direction direction);
-
 glm::vec<2, int> direction_to_vec(Direction direction);
 
 } // namespace pacman

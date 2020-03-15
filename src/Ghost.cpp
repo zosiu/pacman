@@ -13,20 +13,19 @@ Ghost::Ghost(Color color, Coord starting_position, Direction starting_direction,
     : Agent(starting_position, starting_direction, speed, level), color(std::move(color)) {
 
   movement.set_can_move_into_predicate(std::bind(&Ghost::can_move_into, this, std::placeholders::_1));
+  movement.set_next_direction_callback(std::bind(&Ghost::next_direction, this, std::placeholders::_1));
 }
 
 bool Ghost::can_move_into(Tile tile) const { return tile == Tile::Floor; }
 
-void Ghost::update() {
-  movement.move();
-  choose_a_random_direction_forward();
-}
+Direction Ghost::next_direction(const DirectionInfo &info) const {
+  Direction opposite = opposite_of(info.current_direction);
+  std::vector<Direction> turns_without_going_back;
+  std::copy_if(info.possible_turns.begin(), info.possible_turns.end(), std::back_inserter(turns_without_going_back),
+               [&opposite](auto dir) { return dir != opposite; });
 
-void Ghost::choose_a_random_direction_forward() {
-  auto directions_without_turning_back = directions_exluding(opposite_of(movement.get_direction()));
-  if (movement.get_requested_direction() == Direction::None) {
-    movement.request_direction(directions_without_turning_back[rand() % directions_without_turning_back.size()]);
-  }
+  return turns_without_going_back.empty() ? info.current_direction
+                                          : turns_without_going_back[rand() % turns_without_going_back.size()];
 }
 
 void Ghost::render() const {

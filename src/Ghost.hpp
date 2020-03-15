@@ -14,12 +14,11 @@ class Ghost : public Agent {
 public:
   Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level);
 
-  void update() override;
   void render() const override;
 
 private:
   bool can_move_into(Tile tile) const;
-  inline void choose_a_random_direction_forward();
+  Direction next_direction(const DirectionInfo &info) const;
   inline void render_body() const;
   inline void render_pupils() const;
   inline void render_eye_whites() const;

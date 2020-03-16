@@ -12,6 +12,8 @@
   * `wasd`/`arrow keys` : control player
 
 
+![in action](./pacman.gif)
+
 ---
 
 # Első grafika házifeldat

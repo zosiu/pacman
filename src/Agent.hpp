@@ -19,6 +19,9 @@ public:
 
   virtual void render() const = 0;
 
+  TileCoord get_tile() const;
+  Direction get_direction() const;
+
 protected:
   Movement movement;
 };

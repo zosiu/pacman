@@ -13,13 +13,18 @@ namespace pacman {
 class Ghost : public Agent {
 
 public:
-  Ghost(Color color, GhostBehaviourType behaviour_type, Coord starting_position, Direction starting_direction,
-        float speed, const Level *level);
+  using TargetFun = std::function<TileCoord()>;
 
+  Ghost(Coord starting_position, Direction starting_direction, float speed, const Level *level, //
+        Color Color);
+
+  void set_target_function(const TargetFun &fun);
+  void set_behaviour(GhostBehaviourType type);
   void render() const override;
 
 private:
   bool can_move_into(Tile tile) const;
+  void after_move(const MoveInfo &info);
   Direction next_direction(const DirectionInfo &info) const;
   inline void render_body() const;
   inline void render_pupils() const;
@@ -27,7 +32,9 @@ private:
 
 private:
   Color color;
-  GhostBehaviour behaviour;
+  GhostBehaviour behaviour = GhostBehaviourType::Random;
+  TileCoord default_target;
+  TargetFun calculate_target;
 };
 
 } // namespace pacman

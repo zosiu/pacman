@@ -20,16 +20,16 @@ TileCoord Movement::get_tile() const { return {floorf(position.x), floorf(positi
 
 Direction Movement::get_direction() const { return direction; }
 
-std::vector<Direction> Movement::possible_turns() {
-  std::vector<Direction> directions;
+std::unordered_map<Direction, TileCoord> Movement::possible_turns() const {
+  std::unordered_map<Direction, TileCoord> directions;
   if (can_turn_up())
-    directions.push_back(Direction::Up);
-  if (can_turn_down())
-    directions.push_back(Direction::Down);
+    directions[Direction::Up] = get_tile() + direction_to_vec(Direction::Up);
   if (can_turn_left())
-    directions.push_back(Direction::Left);
+    directions[Direction::Left] = get_tile() + direction_to_vec(Direction::Left);
+  if (can_turn_down())
+    directions[Direction::Down] = get_tile() + direction_to_vec(Direction::Down);
   if (can_turn_right())
-    directions.push_back(Direction::Right);
+    directions[Direction::Right] = get_tile() + direction_to_vec(Direction::Right);
 
   return directions;
 }

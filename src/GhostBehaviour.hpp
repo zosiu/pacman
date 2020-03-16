@@ -7,16 +7,18 @@
 
 namespace pacman {
 
-enum class GhostBehaviourType { Random };
+enum class GhostBehaviourType { Random, Target };
 
 class GhostBehaviour {
 public:
   GhostBehaviour(GhostBehaviourType type);
 
-  Direction next_direction(const DirectionInfo &info);
+  void set_type(GhostBehaviourType type);
+  Direction next_direction(const DirectionInfo &info, const TileCoord &target = {0, 0}) const;
 
 private:
-  inline Direction random_direction(const DirectionInfo &info);
+  inline Direction closest_to_target(const DirectionInfo &info, const TileCoord &target) const;
+  inline std::vector<std::pair<Direction, TileCoord>> turns_without_going_back(const DirectionInfo &info) const;
 
 private:
   GhostBehaviourType type;

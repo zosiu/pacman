@@ -7,17 +7,14 @@
 #include "engine/OpenGL/BatchRenderer2D.hpp"
 #include <glad/glad.h>
 
+#include "glm/gtx/norm.hpp"
+
 #include "GameLayer.hpp"
 
 namespace pacman {
 
 constexpr float PLAYER_MS_PER_TILE = 215.0f;
-constexpr float GHOST_MS_PER_TILE = 190.0f;
-
-constexpr Color COLOR_RED_GHOST = {1.0f, 0.0f, 0.0f, 1.0f};
-constexpr Color COLOR_PINK_GHOST = {1.0f, 0.5f, 1.0f, 1.0f};
-constexpr Color COLOR_CYAN_GHOST = {0.0f, 1.0f, 1.0f, 1.0f};
-constexpr Color COLOR_ORANGE_GHOST = {1.0f, 0.5f, 0.25f, 1.0f};
+constexpr float GHOST_MS_PER_TILE = PLAYER_MS_PER_TILE * 1.20f;
 
 constexpr Color COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
 
@@ -27,17 +24,56 @@ GameLayer::GameLayer() : Layer() {
 
   player = std::make_unique<Player>(level_map.center_floor(), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
 
-  ghosts.emplace_back(Ghost(COLOR_RED_GHOST, GhostBehaviourType::Random, //
-                            level_map.north_west_corner_floor(), Direction::Right, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(Ghost(COLOR_PINK_GHOST, GhostBehaviourType::Random, //
-                            level_map.south_west_corner_floor(), Direction::Up, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(Ghost(COLOR_CYAN_GHOST, GhostBehaviourType::Random, //
-                            level_map.north_east_corner_floor(), Direction::Down, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(Ghost(COLOR_ORANGE_GHOST, GhostBehaviourType::Random, //
-                            level_map.south_east_corner_floor(), Direction::Left, GHOST_MS_PER_TILE, &level_map));
+  auto ghost_attrs = ghosts_config();
+  for (auto ghost : {"blinky", "inky", "pinky", "clyde"}) {
+    auto [color, starting_position, starting_direction, behaviour, target_fun] = ghost_attrs.at(ghost);
+    ghosts.insert(
+        {ghost, std::make_unique<Ghost>(starting_position, starting_direction, GHOST_MS_PER_TILE, &level_map, color)});
+    ghosts.at(ghost)->set_behaviour(behaviour);
+    ghosts.at(ghost)->set_target_function(target_fun);
+  }
 }
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }
+
+std::unordered_map<std::string, GameLayer::GhostAttrs> GameLayer::ghosts_config() const {
+  return {
+      {"blinky",
+       {{1.0f, 0.0f, 0.0f, 1.0f},
+        level_map.north_east_corner_floor(),
+        Direction::Left,
+        GhostBehaviourType::Random,
+        [this]() { return this->player->get_tile(); }}},
+      {"pinky",
+       {{1.0f, 0.5f, 1.0f, 1.0f},
+        level_map.north_west_corner_floor(),
+        Direction::Down,
+        GhostBehaviourType::Target,
+        [this]() { return this->player->get_tile() + direction_to_vec(this->player->get_direction()) * 4; }}},
+      {"inky",
+       {{0.0f, 1.0f, 1.0f, 1.0f},
+        level_map.south_east_corner_floor(),
+        Direction::Up,
+        GhostBehaviourType::Target,
+        [this]() {
+          auto pivot = this->player->get_tile() + direction_to_vec(this->player->get_direction()) * 3;
+          auto blinky = (this->ghosts.at("blinky"))->get_tile();
+          return TileCoord{2 * pivot.x - blinky.x, 2 * pivot.y - blinky.y};
+        }}},
+      {"clyde",
+       {{1.0f, 0.5f, 0.25f, 1.0f},
+        level_map.south_west_corner_floor(),
+        Direction::Right,
+        GhostBehaviourType::Target,
+        [this]() {
+          auto pacman = this->player->get_tile();
+          auto clyde = (this->ghosts.at("clyde"))->get_tile();
+          return glm::distance2(static_cast<glm::vec2>(clyde), static_cast<glm::vec2>(pacman)) <= 64
+                     ? pacman
+                     : this->level_map.center_floor();
+        }}},
+  };
+}
 
 void GameLayer::on_attach() {
   shader->bind();
@@ -57,8 +93,8 @@ void GameLayer::on_attach() {
 void GameLayer::reset() {
   level_map.reset();
   player->reset();
-  for (auto &ghost : ghosts)
-    ghost.reset();
+  for (auto &p : ghosts)
+    p.second->reset();
 
   game_state = GameState::Paused;
 }
@@ -70,7 +106,7 @@ void GameLayer::on_update(float time_since_last_update_in_ms) {
 
 void GameLayer::update(float time_since_last_update_in_ms) {
   if (std::any_of(ghosts.begin(), ghosts.end(),
-                  [this](const Ghost &ghost) { return this->player->collides_with(ghost); })) {
+                  [this](const auto &p) { return this->player->collides_with(*p.second); })) {
     game_state = GameState::Lost;
   };
 
@@ -78,8 +114,8 @@ void GameLayer::update(float time_since_last_update_in_ms) {
     for (size_t i = 0; i < time_since_last_update_in_ms; ++i) {
       player->update();
 
-      for (auto &ghost : ghosts)
-        ghost.update();
+      for (auto &p : ghosts)
+        p.second->update();
     }
   }
 
@@ -97,8 +133,8 @@ void GameLayer::render() const {
 
   player->render();
 
-  for (auto &ghost : ghosts)
-    ghost.render();
+  for (auto &p : ghosts)
+    p.second->render();
 
   if (game_state == GameState::Lost)
     Text::render_you_lose({level_map.center_floor().x - 1, level_map.center_floor().y - 2.5});

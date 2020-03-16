@@ -36,12 +36,23 @@ private:
   void on_key_pressed(const engine::KeyPressedEvent &event);
 
 private:
+  struct GhostAttrs {
+    Color color;
+    TileCoord starting_position;
+    Direction starting_direction;
+    GhostBehaviourType behaviour;
+    Ghost::TargetFun target_fun;
+  };
+
+  inline std::unordered_map<std::string, GhostAttrs> ghosts_config() const;
+
+private:
   std::unique_ptr<engine::ShaderProgram> shader;
 
   GameState game_state = GameState::Paused;
   Level level_map;
   std::unique_ptr<Player> player;
-  std::vector<Ghost> ghosts;
+  std::unordered_map<std::string, std::unique_ptr<Ghost>> ghosts;
 };
 
 } // namespace pacman

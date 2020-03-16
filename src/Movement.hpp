@@ -10,7 +10,7 @@ namespace pacman {
 
 struct DirectionInfo {
   Direction current_direction;
-  std::vector<Direction> possible_turns;
+  std::unordered_map<Direction, TileCoord> possible_turns;
 };
 
 struct MoveInfo {
@@ -48,7 +48,7 @@ private:
   inline bool can_turn_left() const;
   inline bool can_turn_right() const;
   inline bool is_blocked() const;
-  inline std::vector<Direction> possible_turns();
+  inline std::unordered_map<Direction, TileCoord> possible_turns() const;
 
 private:
   Coord starting_position;

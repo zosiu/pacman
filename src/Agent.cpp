@@ -18,7 +18,11 @@ void Agent::reset() { movement.reset(); }
 void Agent::update() { movement.move(); }
 
 bool Agent::collides_with(const Agent &other_agent) const {
-  return glm::distance(movement.get_position(), other_agent.movement.get_position()) < 0.9f;
+  return glm::distance(movement.get_position(), other_agent.movement.get_position()) < 0.95f;
 }
+
+TileCoord Agent::get_tile() const { return movement.get_tile(); }
+
+Direction Agent::get_direction() const { return movement.get_direction(); }
 
 } // namespace pacman

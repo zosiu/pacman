@@ -6,6 +6,8 @@
 #include <glad/glad.h>
 
 namespace engine {
+
+// Class for cenventient OpenGl shader creation
 class ShaderProgram {
 public:
   ShaderProgram(const char *vertex_shader_filename, const char *fragment_shader_filename);
@@ -24,6 +26,7 @@ private:
 private:
   GLuint id = 0;
 };
+
 } // namespace engine
 
 #endif /* FEC30CDA_0134_3B0A_1280_9930933A4E77 */

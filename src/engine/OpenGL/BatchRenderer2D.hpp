@@ -5,6 +5,7 @@
 
 namespace engine {
 
+// Batch rendeder for drawing multiple quads with a single draw call
 class BatchRenderer2D {
 public:
   static void init();

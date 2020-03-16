@@ -7,6 +7,7 @@ struct GLFWwindow;
 
 namespace engine {
 
+// Wrapper for creating an OpenGL context
 class OpenGLContext {
 public:
   OpenGLContext(GLFWwindow *window_handle);

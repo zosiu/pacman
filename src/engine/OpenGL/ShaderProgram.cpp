@@ -24,10 +24,8 @@ ShaderProgram::ShaderProgram(const char *vertex_shader_filename, const char *fra
   glGetProgramiv(shader_program, GL_LINK_STATUS, &linking_result);
 
   if (linking_result == GL_FALSE) {
-    GLint linking_log_length;
-    glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &linking_log_length);
-    char *log_message = (char *)alloca((size_t)linking_log_length * sizeof(char));
-    glGetProgramInfoLog((GLuint)linking_result, linking_log_length, &linking_log_length, log_message);
+    GLchar log_message[1024];
+    glGetProgramInfoLog(shader_program, 1024, nullptr, log_message);
     LOG_ERROR("[SHADER] linking failed: {}", log_message);
 
     glDeleteProgram(shader_program);
@@ -91,10 +89,8 @@ GLuint ShaderProgram::compile_shader(GLenum shader_type, const char *source_file
   glGetShaderiv(shader, GL_COMPILE_STATUS, &compilation_result);
 
   if (compilation_result == GL_FALSE) {
-    GLsizei compilation_log_length;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &compilation_log_length);
-    char *log_message = (char *)alloca((size_t)compilation_log_length * sizeof(char));
-    glGetShaderInfoLog((GLuint)compilation_result, compilation_log_length, &compilation_log_length, log_message);
+    GLchar log_message[1024];
+    glGetShaderInfoLog(shader, 1024, nullptr, log_message);
     LOG_ERROR("[SHADER] compilation failed: {}", log_message);
     glDeleteShader(shader);
     return 0;

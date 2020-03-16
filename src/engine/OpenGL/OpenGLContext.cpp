@@ -1,3 +1,5 @@
+#include "../../pch.hpp"
+
 #include "../utils/Assert.hpp"
 
 #include <GLFW/glfw3.h>

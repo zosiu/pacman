@@ -1,6 +1,7 @@
 #include "pch.hpp"
 
 #include "Direction.hpp"
+#include "GhostBehaviour.hpp"
 #include "Text.hpp"
 
 #include "engine/OpenGL/BatchRenderer2D.hpp"
@@ -26,14 +27,14 @@ GameLayer::GameLayer() : Layer() {
 
   player = std::make_unique<Player>(level_map.center_floor(), Direction::Right, PLAYER_MS_PER_TILE, &level_map);
 
-  ghosts.emplace_back(
-      Ghost(COLOR_RED_GHOST, level_map.north_west_corner_floor(), Direction::Right, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(
-      Ghost(COLOR_PINK_GHOST, level_map.south_west_corner_floor(), Direction::Up, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(
-      Ghost(COLOR_CYAN_GHOST, level_map.north_east_corner_floor(), Direction::Down, GHOST_MS_PER_TILE, &level_map));
-  ghosts.emplace_back(
-      Ghost(COLOR_ORANGE_GHOST, level_map.south_east_corner_floor(), Direction::Left, GHOST_MS_PER_TILE, &level_map));
+  ghosts.emplace_back(Ghost(COLOR_RED_GHOST, GhostBehaviourType::Random, //
+                            level_map.north_west_corner_floor(), Direction::Right, GHOST_MS_PER_TILE, &level_map));
+  ghosts.emplace_back(Ghost(COLOR_PINK_GHOST, GhostBehaviourType::Random, //
+                            level_map.south_west_corner_floor(), Direction::Up, GHOST_MS_PER_TILE, &level_map));
+  ghosts.emplace_back(Ghost(COLOR_CYAN_GHOST, GhostBehaviourType::Random, //
+                            level_map.north_east_corner_floor(), Direction::Down, GHOST_MS_PER_TILE, &level_map));
+  ghosts.emplace_back(Ghost(COLOR_ORANGE_GHOST, GhostBehaviourType::Random, //
+                            level_map.south_east_corner_floor(), Direction::Left, GHOST_MS_PER_TILE, &level_map));
 }
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }

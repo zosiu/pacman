@@ -5,6 +5,7 @@
 
 #include "Agent.hpp"
 #include "Direction.hpp"
+#include "GhostBehaviour.hpp"
 #include "Movement.hpp"
 
 namespace pacman {
@@ -12,7 +13,8 @@ namespace pacman {
 class Ghost : public Agent {
 
 public:
-  Ghost(Color color, Coord starting_position, Direction starting_direction, float speed, const Level *level);
+  Ghost(Color color, GhostBehaviourType behaviour_type, Coord starting_position, Direction starting_direction,
+        float speed, const Level *level);
 
   void render() const override;
 
@@ -25,6 +27,7 @@ private:
 
 private:
   Color color;
+  GhostBehaviour behaviour;
 };
 
 } // namespace pacman

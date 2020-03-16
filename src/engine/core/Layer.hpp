@@ -6,6 +6,7 @@
 
 namespace engine {
 
+// Abstract base class for application logic
 class Layer {
 public:
   virtual ~Layer() = default;

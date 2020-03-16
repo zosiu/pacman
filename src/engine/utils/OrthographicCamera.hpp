@@ -5,6 +5,7 @@
 
 namespace engine {
 
+// Orthographic camera that can be moved and rotated
 class OrthographicCamera {
 public:
   OrthographicCamera(float left, float right, float bottom, float top);

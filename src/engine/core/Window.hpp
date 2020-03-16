@@ -19,6 +19,7 @@ struct WindowProps {
       : title(title), width(width), height(height) {}
 };
 
+// GLFW window wrapper with event handling
 class Window {
 public:
   using EventCallbackFun = std::function<void(const Event &)>;

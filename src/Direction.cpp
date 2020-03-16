@@ -6,8 +6,6 @@ namespace pacman {
 
 Direction opposite_of(Direction direction) {
   switch (direction) {
-  case Direction::None:
-    return Direction::None;
   case Direction::Up:
     return Direction::Down;
   case Direction::Down:
@@ -16,13 +14,13 @@ Direction opposite_of(Direction direction) {
     return Direction::Right;
   case Direction::Right:
     return Direction::Left;
+  default:
+    return Direction::None;
   }
 }
 
 glm::vec<2, int> direction_to_vec(Direction direction) {
   switch (direction) {
-  case Direction::None:
-    return {0, 0};
   case Direction::Up:
     return {0, -1};
   case Direction::Down:
@@ -31,6 +29,8 @@ glm::vec<2, int> direction_to_vec(Direction direction) {
     return {-1, 0};
   case Direction::Right:
     return {1, 0};
+  default:
+    return {0, 0};
   }
 }
 

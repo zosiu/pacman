@@ -66,14 +66,14 @@ bool Movement::is_on_tile_y_edge() const { return int(position.y * ms_per_tile) 
 
 bool Movement::is_on_tile_edge() const {
   switch (direction) {
-  case Direction::None:
-    return false;
   case Direction::Up:
   case Direction::Down:
     return is_on_tile_y_edge();
   case Direction::Left:
   case Direction::Right:
     return is_on_tile_x_edge();
+  default:
+    return false;
   }
 }
 

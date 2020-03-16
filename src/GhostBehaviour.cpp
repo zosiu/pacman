@@ -19,6 +19,8 @@ Direction GhostBehaviour::next_direction(const DirectionInfo &info, const TileCo
                              target + TileCoord{(rand() % (offset * 2)) - offset, (rand() % (offset * 2)) - offset});
   case GhostBehaviourType::Target:
     return closest_to_target(info, target);
+  default:
+    return info.current_direction;
   }
 }
 

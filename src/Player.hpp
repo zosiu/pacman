@@ -9,6 +9,9 @@
 
 namespace pacman {
 
+// Player agent:
+// direction can be set from the "outside"
+// eats pellets when moving onto a new tile
 class Player : public Agent {
 public:
   Player(Coord starting_position, Direction starting_direction, float speed, Level *level);

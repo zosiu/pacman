@@ -8,6 +8,8 @@ namespace pacman {
 
 Agent::Agent(Coord starting_position, Direction starting_direction, float speed, const Level *level)
     : movement(starting_position, starting_direction, speed, level) {
+
+  // some abitrary defaults, it's up to the descendant to specify these for itself
   movement.set_can_move_into_predicate([](Tile) { return false; });
   movement.set_next_direction_callback([](const DirectionInfo &info) { return info.current_direction; });
   movement.set_after_move_callback([](const MoveInfo & /* info */) {});

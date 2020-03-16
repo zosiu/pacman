@@ -8,6 +8,9 @@
 
 namespace pacman {
 
+// Agent base class for:
+// * handling movement
+// * determining collision
 class Agent {
 public:
   Agent(Coord starting_position, Direction starting_direction, float speed, const Level *level);

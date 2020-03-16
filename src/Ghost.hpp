@@ -10,6 +10,8 @@
 
 namespace pacman {
 
+// Ghost agent:
+// * movement is determinded by a given behaviour and target tile
 class Ghost : public Agent {
 
 public:

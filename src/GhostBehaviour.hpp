@@ -9,6 +9,10 @@ namespace pacman {
 
 enum class GhostBehaviourType { Random, Target };
 
+// Behavior for determining the next direction a ghost takes.
+// Greedily moves towards a target tile (or it's random vicinity).
+// Evaluates the available turns based on the distance to the target and takes the one which is the closes.
+// Only moves forward, never backwards (never reverses it's direction);
 class GhostBehaviour {
 public:
   GhostBehaviour(GhostBehaviourType type);

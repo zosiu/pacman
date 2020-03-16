@@ -20,6 +20,7 @@ TileCoord Movement::get_tile() const { return {floorf(position.x), floorf(positi
 
 Direction Movement::get_direction() const { return direction; }
 
+// returns possible direction changes with the tile they lead to
 std::unordered_map<Direction, TileCoord> Movement::possible_turns() const {
   std::unordered_map<Direction, TileCoord> directions;
   if (can_turn_up())
@@ -40,8 +41,10 @@ void Movement::reset() {
 }
 
 void Movement::move() {
+  // check for a new direction
   planned_direction = next_direction({direction, possible_turns()});
 
+  // change direction if requested and feasible
   if (planned_direction_is_feasible()) {
     direction = planned_direction;
     planned_direction = Direction::None;
@@ -49,12 +52,12 @@ void Movement::move() {
 
   auto tile_before = get_tile();
 
-  if (is_blocked()) {
-    planned_direction = Direction::None;
-  } else {
+  // advance position unless on a tile edge with a blocking tile in current direction
+  if (!is_blocked()) {
     position += (glm::vec<2, float>)direction_to_vec(direction) / ms_per_tile;
   }
 
+  // signal tile position before and after the move
   after_move({tile_before, get_tile()});
 }
 

@@ -13,8 +13,8 @@
 
 namespace pacman {
 
-constexpr float PLAYER_MS_PER_TILE = 215.0f;
-constexpr float GHOST_MS_PER_TILE = PLAYER_MS_PER_TILE * 1.20f;
+constexpr float PLAYER_MS_PER_TILE = 190.0f;
+constexpr float GHOST_MS_PER_TILE = PLAYER_MS_PER_TILE * 1.10f;
 
 constexpr Color COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
 
@@ -36,24 +36,28 @@ GameLayer::GameLayer() : Layer() {
 
 GameLayer::~GameLayer() { engine::BatchRenderer2D::destroy(); }
 
+// Hardcoded ghost setup
 std::unordered_map<std::string, GameLayer::GhostAttrs> GameLayer::ghosts_config() const {
   return {
       {"blinky",
        {{1.0f, 0.0f, 0.0f, 1.0f},
         level_map.north_east_corner_floor(),
         Direction::Left,
+        // targets the random vicinity of the player
         GhostBehaviourType::Random,
         [this]() { return this->player->get_tile(); }}},
       {"pinky",
        {{1.0f, 0.5f, 1.0f, 1.0f},
         level_map.north_west_corner_floor(),
         Direction::Down,
+        // targets the tile 4 tiles ahead of the player
         GhostBehaviourType::Target,
         [this]() { return this->player->get_tile() + direction_to_vec(this->player->get_direction()) * 4; }}},
       {"inky",
        {{0.0f, 1.0f, 1.0f, 1.0f},
         level_map.south_east_corner_floor(),
         Direction::Up,
+        // "Works together" with blinky, targets his mirror position based on a position near the player
         GhostBehaviourType::Target,
         [this]() {
           auto pivot = this->player->get_tile() + direction_to_vec(this->player->get_direction()) * 3;
@@ -64,6 +68,7 @@ std::unordered_map<std::string, GameLayer::GhostAttrs> GameLayer::ghosts_config(
        {{1.0f, 0.5f, 0.25f, 1.0f},
         level_map.south_west_corner_floor(),
         Direction::Right,
+        // Targets the player if their distance is at most 8 tiles, or the middle of the level otherwise
         GhostBehaviourType::Target,
         [this]() {
           auto pacman = this->player->get_tile();
@@ -82,6 +87,7 @@ void GameLayer::on_attach() {
   const float t = 2.0f / (float)max_tiles;
   const float x_correction =
       level_map.number_of_columns() < level_map.number_of_rows() ? (max_tiles - min_tiles) / float(max_tiles) : 0.0f;
+  // transform tile coordinates to OpenGL
   const auto model_transform = glm::mat4({{t, 0.0f, 0.0f, 0.0f},   //
                                           {0.0f, -t, 0.0f, 0.0f},  //
                                           {0.0f, 0.0f, 0.0, 0.0f}, //
@@ -105,12 +111,14 @@ void GameLayer::on_update(float time_since_last_update_in_ms) {
 }
 
 void GameLayer::update(float time_since_last_update_in_ms) {
+  // end the game if any of the ghosts reached the player
   if (std::any_of(ghosts.begin(), ghosts.end(),
                   [this](const auto &p) { return this->player->collides_with(*p.second); })) {
     game_state = GameState::Lost;
   };
 
   if (game_state == GameState::InProgress) {
+    // update agents every millisecond
     for (size_t i = 0; i < time_since_last_update_in_ms; ++i) {
       player->update();
 
@@ -119,6 +127,7 @@ void GameLayer::update(float time_since_last_update_in_ms) {
     }
   }
 
+  // end the game if there are no more pellets for the player to eat
   if (level_map.no_more_pellets())
     game_state = GameState::Won;
 }

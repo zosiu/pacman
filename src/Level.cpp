@@ -12,6 +12,7 @@ constexpr Color COLOR_WALL = {0.0f, 0.0f, 0.4f, 1.0f};
 constexpr Color COLOR_PELLET = {1.0f, 1.0f, 1.0f, 1.0f};
 
 Level::Level() {
+  // Hard-coded layout.
   layout = {{{
                  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
                  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,

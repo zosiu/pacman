@@ -16,6 +16,16 @@ namespace pacman {
 
 enum class GameState { Paused, InProgress, Won, Lost };
 
+// Layer that pulls all the game elements together:
+// Responsible for creating and managing:
+// * the level
+// * the player
+// * the ghosts
+// * the game state (in_progress, paused, won, lost)
+// * responding to keyboard events
+//   * setting player direction
+//   * pause/resume/restart the game
+
 class GameLayer : public engine::Layer {
 public:
   GameLayer();

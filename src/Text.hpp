@@ -4,6 +4,7 @@
 
 namespace pacman {
 
+// Helper for drawing a limited set of text messages.
 class Text {
 public:
   static void render_you_win(const Coord &position);

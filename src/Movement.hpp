@@ -18,6 +18,10 @@ struct MoveInfo {
   TileCoord current_tile;
 };
 
+// Represents movement across tiles of a level, characterized by
+// * a predicate for deciding if movement is allowed for a given tile
+// * a direction (up/down/left/right)
+// * the number of milliseconds it takes to go through a tile
 class Movement {
 public:
   using CanMoveIntoPredicate = std::function<bool(Tile)>;

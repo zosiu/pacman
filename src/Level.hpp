@@ -12,6 +12,8 @@ struct TileCoord2KeyFunc {
   bool operator()(const TileCoord &a, const TileCoord &b) const { return a.x == b.x && a.y == b.y; }
 };
 
+// Represents a level which is made up of a grid of tiles (wall/floor/void).
+// Tiles can contain pellets that can be "eaten".
 class Level {
 public:
   Level();

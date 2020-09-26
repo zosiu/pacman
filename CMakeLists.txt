@@ -2,16 +2,21 @@ cmake_minimum_required (VERSION 3.16)
 
 project (Pacman)
 
+math(EXPR platform_bits "${CMAKE_SIZEOF_VOID_P} * 8")
+set(platform_dir ${CMAKE_SYSTEM_NAME}${platform_bits})
+set (CMAKE_BINARY_DIR "${PROJECT_SOURCE_DIR}/bin")
+foreach(config DEBUG RELEASE RELWITHDEBINFO MINSIZEREL)
+    foreach(var CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${config} CMAKE_LIBRARY_OUTPUT_DIRECTORY_${config} CMAKE_RUNTIME_OUTPUT_DIRECTORY_${config})
+        string(TOLOWER "${platform_dir}_${config}" ${var})
+        set(${var} "${CMAKE_BINARY_DIR}/${${var}}")
+    endforeach()
+endforeach()
 
 set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set (CMAKE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src/")
 file (GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/*.cpp")
-set (CMAKE_BINARY_DIR "${PROJECT_SOURCE_DIR}/bin/")
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/debug")
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/release")
 set (LIB_DIR "${PROJECT_SOURCE_DIR}/vendor/")
 set (SHADER_DIR "${PROJECT_SOURCE_DIR}/shaders/")
-
 
 # find_package(glfw3 3.2.1 REQUIRED)
 # find_package(OpenGL 4.5 REQUIRED)
@@ -48,7 +53,11 @@ set (APP_NAME "pacman")
 add_executable (${APP_NAME} ${SRC_FILES})
 
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
-target_compile_options(${APP_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic)
+
+IF(CMAKE_COMPILER_IS_GNUCC)
+  target_compile_options(${APP_NAME} PRIVATE -Werror -Wall -Wextra -Wpedantic)
+ENDIF(CMAKE_COMPILER_IS_GNUCC)
+
 target_compile_definitions (${APP_NAME} PUBLIC "$<$<CONFIG:DEBUG>:DEBUG>")
 target_precompile_headers (${APP_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/pch.hpp")
 
@@ -59,11 +68,9 @@ target_include_directories(${APP_NAME} PRIVATE "${GLAD_DIR}/include")
 target_include_directories(${APP_NAME} PRIVATE "${SPDLOG_DIR}/include")
 
 target_link_libraries(${APP_NAME} "glfw" "${GLFW_LIBRARIES}")
-target_link_libraries(${APP_NAME} "glad" ${CMAKE_DL_LIBS})
+target_link_libraries(${APP_NAME} "glad")
 target_link_libraries(${APP_NAME} "glm")
 target_link_libraries(${APP_NAME} "spdlog")
-
-
 
 add_custom_command(
   TARGET ${APP_NAME} POST_BUILD

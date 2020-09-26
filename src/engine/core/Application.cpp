@@ -14,7 +14,7 @@ Application::Application(const std::string &window_name, uint16_t width, uint16_
   window->set_event_callback(std::bind(&Application::on_event, this, std::placeholders::_1));
 
   float aspect_ratio = (float)width / (float)height;
-  camera = std::make_unique<OrthographicCamera>(-aspect_ratio, aspect_ratio, -1.0, 1.0);
+  camera = std::make_unique<OrthographicCamera>(-aspect_ratio, aspect_ratio, -1.0f, 1.0f);
 }
 
 void Application::attach_layer(Layer *layer) {

@@ -16,8 +16,6 @@ namespace pacman {
 constexpr float PLAYER_MS_PER_TILE = 190.0f;
 constexpr float GHOST_MS_PER_TILE = PLAYER_MS_PER_TILE * 1.10f;
 
-constexpr Color COLOR_BACKGROUND = {0.0f, 0.0f, 0.0f, 1.0f};
-
 GameLayer::GameLayer() : Layer() {
   engine::BatchRenderer2D::init();
   shader = std::make_unique<engine::ShaderProgram>("shaders/base.vert.glsl", "shaders/base.frag.glsl");
@@ -133,7 +131,7 @@ void GameLayer::update(float time_since_last_update_in_ms) {
 }
 
 void GameLayer::render() const {
-  glClearColor(COLOR_BACKGROUND.x, COLOR_BACKGROUND.y, COLOR_BACKGROUND.z, COLOR_BACKGROUND.w);
+  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 
   engine::BatchRenderer2D::begin_batch();
